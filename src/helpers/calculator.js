@@ -10,7 +10,7 @@ function radians_to_degrees(radians) {
 
 function bearing(location, target) {
 	const { latitude, longitude } = location;
-	const { latitude as targetLatitude, longitude as targetLongitude} = target;
+	const { latitude: targetLatitude, longitude: targetLongitude} = target;
 
 	const angleToViewerNS = degrees_to_radians(latitude);
 	const angleToViewerEW = degrees_to_radians(targetLatitude);
@@ -21,9 +21,8 @@ function bearing(location, target) {
 
 	const y = Math.sin(deltaAngleEW) * Math.cos(angleToViewerEW);
 	const x = Math.cos(angleToViewerNS) * Math.sin(angleToViewerEW) - Math.sin(angleToViewerNS) * Math.cos(angleToViewerEW) * Math.cos(deltaAngleEW);
-	const bearing = Math.atan2(y,x);
-	bearing = degrees(bearing);// radians to degrees
-	bearing = ( ((int)bearing + 360) % 360 );
+	const bearingTotal = radians_to_degrees(Math.atan2(y,x));
+	const bearing = ( (bearingTotal + 360) % 360 );
 
 	console.log("Heading:", bearing)
 
@@ -32,7 +31,7 @@ function bearing(location, target) {
 
 function groundDistanceMeters(location, target) {
 	const { latitude, longitude } = location;
-	const { latitude as targetLatitude, longitude as targetLongitude} = target;
+	const { latitude: targetLatitude, longitude: targetLongitude} = target;
 
 	const R = 6371e3;
 	const angleToViewerNS = latitude * Math.PI/180;
