@@ -13,4 +13,4 @@ class TargetManagementScreen extends Component {
 	}
 }
 
-export { TargetManagementScreen };
+export default TargetManagementScreen;

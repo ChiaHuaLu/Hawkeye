@@ -8,7 +8,6 @@ import { authFormStyles } from './styles';
 class AuthForm extends Component {
 
 	constructor(props) {
-		// {authText, alternateText, onSubmitAction, onSubmitText, toggleAuthMode}
 		super(props);
 		this.state = {
 			email: '',
@@ -35,14 +34,16 @@ class AuthForm extends Component {
 							placeholder="person@example.com"
 							leftIcon={null}
 							value={this.state.email}
-							onChangeText={this.updateState.bind(this,'email')} />
+							onChangeText={this.updateState.bind(this,'email')}
+							errorMessage={this.props.emailError}/>
 						<Input
 							label="Password"
 							placeholder="password"
 							leftIcon={null}
 							secureTextEntry
 							value={this.state.password}
-							onChangeText={this.updateState.bind(this,'password')} />
+							onChangeText={this.updateState.bind(this,'password')}
+							errorMessage={this.props.passwordError} />
 					</View>
 					<Button
 						style={authFormStyles.button}

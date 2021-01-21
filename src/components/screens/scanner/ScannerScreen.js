@@ -17,4 +17,4 @@ ScannerScreen.navigationOptions = {
 	title: 'Scan'
 }
 
-export { ScannerScreen };
+export default ScannerScreen ;

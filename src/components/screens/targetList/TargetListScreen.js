@@ -13,4 +13,4 @@ class TargetListScreen extends Component {
 	}
 }
 
-export { TargetListScreen };
+export default TargetListScreen;

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Scene, Router, Tabs } from 'react-native-router-flux';
-import {
-	AuthenticationScreen,
-	TargetListScreen,
-	TargetManagementScreen,
-	ScannerScreen,
-	SettingsScreen
-} from './components/screens';
+import AuthenticationScreen from './components/screens/authentication/AuthenticationScreen';
+import TargetListScreen from './components/screens/targetList/TargetListScreen';
+import TargetManagementScreen from './components/screens/targetManagement/TargetManagementScreen';
+import ScannerScreen from './components/screens/scanner/ScannerScreen';
+import SettingsScreen from './components/screens/settings/SettingsScreen';
+
 
 
 const RouterComponent = () => {

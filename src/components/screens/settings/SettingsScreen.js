@@ -17,4 +17,4 @@ SettingsScreen.navigationOptions = {
 	title: 'Settings',
 }
 
-export { SettingsScreen };
+export default SettingsScreen;
