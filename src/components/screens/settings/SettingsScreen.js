@@ -14,7 +14,7 @@ class SettingsScreen extends Component {
 }
 
 SettingsScreen.navigationOptions = {
-	title: 'Settings',
+	title: 'Settings  ',
 }
 
 export default SettingsScreen;
