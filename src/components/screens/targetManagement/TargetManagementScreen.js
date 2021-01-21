@@ -27,9 +27,9 @@ class TargetManagementScreen extends Component {
 		}
 	}
 
-	enableOrDisableSaveButton(key, value) {
+	enableOrDisableSaveButton(key, value, show) {
 		const nextState = {...this.state, [key]:value}
-		const shouldShow = nextState.name && nextState.accessCode;
+		const shouldShow = nextState.name && nextState.accessCode || show;
 		this.props.navigation.setParams({
 			'onRight': shouldShow ? this.save.bind(this) : undefined,
 			'rightTitle': shouldShow ? 'Save' : undefined
@@ -41,7 +41,16 @@ class TargetManagementScreen extends Component {
 		this.setState({...this.state, [key]: value});
 	}
 
+	componentWillMount() {
+		const target = this.props.edit;
+		if (target) {
+			this.enableOrDisableSaveButton(null, null, true);
+			this.setState({name: target.name, accessCode: target.accessCode})
+		}
+	}
+
 	render() {
+
 		return (
 			<SafeAreaView>
 				<View style={styles.container}>
