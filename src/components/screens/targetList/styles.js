@@ -15,5 +15,12 @@ export default styles = {
 	},
 	container: {
 		flex: 1
+	},
+	noTargetsView: {
+		alignItems: 'center'
+	},
+	noTargetsText: {
+		fontSize: 20,
+		color: '#aaaaaa'
 	}
 };
