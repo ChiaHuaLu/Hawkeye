@@ -12,11 +12,11 @@ import {
 const RouterComponent = () => {
 	return (
 		<Router>
-			<Scene key="root" hideNavBar>
+			<Scene key="root" hideNavBar initial>
 				<Scene
 					key="authentication"
 					component={AuthenticationScreen} />
-				<Tabs key="mainFlow" initial>
+				<Tabs key="mainFlow">
 					<Scene key="targetFlow" title="Targets">
 						<Scene
 							key="targetList"

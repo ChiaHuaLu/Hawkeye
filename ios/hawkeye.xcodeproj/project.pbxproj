@@ -122,6 +122,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0E57978820704DDF991C9304 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* hawkeye */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,17 +202,8 @@
 				D59A71BFAEC287E5B731A658 /* Pods-hawkeye-tvOSTests.debug.xcconfig */,
 				E47256E08F4149F21CB8D181 /* Pods-hawkeye-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		0E57978820704DDF991C9304 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
