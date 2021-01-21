@@ -49,12 +49,18 @@ class TargetManagementScreen extends Component {
 		}
 	}
 
-	render() {
+	renderFormTitle() {
+		const modifyMode = this.props.edit;
+		const title = modifyMode ? "Edit Details" : "Add Target";
 
+		return <Text h2>{title}</Text>
+	}
+
+	render() {
 		return (
 			<SafeAreaView>
 				<View style={styles.container}>
-					<Text h2>Add new target</Text>
+					{ this.renderFormTitle() }
 					<Input
 						onChangeText={this.updateState.bind(this, 'name')}
 						value={this.state.name}

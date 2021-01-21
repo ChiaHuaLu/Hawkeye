@@ -12,7 +12,7 @@ import SettingsScreen from './components/screens/settings/SettingsScreen';
 const RouterComponent = () => {
 	return (
 		<Router titleStyle={styles.navigationBar}>
-			<Scene key="root" hideNavBar initial>
+			<Scene key="root" hideNavBar>
 				<Scene
 					key="authentication"
 					component={AuthenticationScreen} />
@@ -33,7 +33,7 @@ const RouterComponent = () => {
 						key="scanner"
 						component={ScannerScreen} />
 					<Scene
-
+						initial
 						key="settings"
 						component={SettingsScreen} />
 				</Tabs>
