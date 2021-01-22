@@ -7,7 +7,8 @@ import styles from './styles';
 import GetLocation from 'react-native-get-location';
 import Geolocation from 'react-native-geolocation-service';
 
-
+import { DeviceEventEmitter } from 'react-native';
+import DeviceAngles from 'react-native-device-angles';
 
 
 class SettingsScreen extends Component {
@@ -30,12 +31,15 @@ class SettingsScreen extends Component {
 
 	getLocationOnce() {
 
+
 		GetLocation.getCurrentPosition({
 		    enableHighAccuracy: true,
 		    timeout: 15000,
 		})
 		.then(location => {
-		    console.log(location);
+			const { bearing, course } = location;
+
+		    console.log("Heading: ", bearing, "   ", course);
 		})
 		.catch(error => {
 		    const { code, message } = error;
@@ -61,9 +65,13 @@ class SettingsScreen extends Component {
 	}
 
 	deleteLocationData() {
-		console.log(UNI);
-
-
+		console.log(DeviceAngles);
+		// DeviceAngles.setDeviceMotionUpdateInterval(1);
+		// DeviceAngles.startMotionUpdates();
+		// DeviceEventEmitter.addListener('AnglesData', function (data) {
+		//   console.log("Pitch:", data.pitch, ",   Roll:", data.roll, ",   Yaw:", data.yaw);
+		//
+		// });
 	}
 
 	componentWillMount() {
