@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
 import styles from './styles';
-import { deleteTarget } from '../../../actions/TargetActions';
+import { deleteTarget, trackTarget } from '../../../actions/TargetActions';
 
 class TargetListItem extends Component {
 	constructor(props) {
@@ -17,24 +17,41 @@ class TargetListItem extends Component {
 	}
 
 	deleteItem() {
-		console.log("Delete", this.props.accessCode);
 		this.props.deleteTarget(this.props.accessCode);
 	}
 
+	trackTarget() {
+		this.props.trackTarget(this.props.accessCode);
+	}
+
+	listItemStyle() {
+		if (this.props.targets.activeTarget !== this.props.accessCode)
+			return styles.listItem;
+		return {...styles.listItem, ...styles.activeTarget};
+	}
+
 	render() {
-		const swipeDeleteButton = [{
-			text: 'Delete',
-			backgroundColor: 'red',
-			underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
-			onPress: this.deleteItem.bind(this)
-		}];
+		console.log(this.listItemStyle())
+		const swipeDeleteButton = [
+			{
+				text: 'Delete',
+				backgroundColor: 'red',
+				underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+				onPress: this.deleteItem.bind(this)
+			}, {
+				text: 'Track',
+				backgroundColor: 'green',
+				underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
+				onPress: this.trackTarget.bind(this)
+			}];
 
 		return (
 			<View>
 				<Swipeout right={swipeDeleteButton}
-					backgroundColor='transparent'>
+					backgroundColor='transparent'
+					autoClose>
 					<TouchableOpacity onPress={this.goToTargetManagement.bind(this)}>
-						<View style={styles.listItem}>
+						<View style={this.listItemStyle()}>
 							<Text style={[styles.itemDescription, styles.itemDetails]}>{this.props.name}</Text>
 							<Text style={[styles.itemAccessCode, styles.itemStatus]}>{this.props.status}</Text>
 						</View>
@@ -46,6 +63,12 @@ class TargetListItem extends Component {
 	};
 }
 
+const mapStateToProps = state => {
+	console.log(state.targets.activeTarget)
+	return state;
+};
+
 export default connect(
-	null, {deleteTarget}
+	mapStateToProps,
+	{deleteTarget, trackTarget}
 )(TargetListItem);

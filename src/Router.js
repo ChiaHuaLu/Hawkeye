@@ -14,12 +14,16 @@ const RouterComponent = () => {
 		<Router titleStyle={styles.navigationBar}>
 			<Scene key="root" hideNavBar>
 				<Scene
+					initial
 					key="authentication"
 					component={AuthenticationScreen} />
 				<Tabs key="mainFlow"
 					tabBarStyle={styles.tabBar}
-					headerLayoutPreset={'center'} initial>
-					<Scene key="targetFlow" title="Targets">
+					headerLayoutPreset={'center'}>
+					<Scene
+						initial
+						key="targetFlow"
+						title="Targets">
 						<Scene
 							key="targetList"
 							component={TargetListScreen}
@@ -33,7 +37,6 @@ const RouterComponent = () => {
 						key="scanner"
 						component={ScannerScreen} />
 					<Scene
-						initial
 						key="settings"
 						component={SettingsScreen} />
 				</Tabs>

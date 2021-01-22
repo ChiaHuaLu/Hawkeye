@@ -4,6 +4,9 @@ export default styles = {
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 	},
+	activeTarget: {
+		backgroundColor: '#34abeb'
+	},
 	itemDescription: {
 		fontWeight: 'bold',
 	},

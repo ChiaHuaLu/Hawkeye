@@ -1,152 +1,131 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, SafeAreaView, Vibration } from 'react-native';
-import Clipboard from '@react-native-community/clipboard';
 import { Text, Input, Button } from 'react-native-elements';
-import Communications from 'react-native-communications'
-import styles from './styles';
+import Clipboard from '@react-native-community/clipboard';
+import Communications from 'react-native-communications';
 import GetLocation from 'react-native-get-location';
-import Geolocation from 'react-native-geolocation-service';
+import { updateLocation, deleteLocation } from '../../../actions/LocationActions';
+import styles from './styles';
 
-import { DeviceEventEmitter } from 'react-native';
-import DeviceAngles from 'react-native-device-angles';
 
-import SensorFusionProvider, { useSensorFusion, useCompass, toDegrees } from 'react-native-sensor-fusion';
-
-const Indicator = () => {
-
-  const { ahrs } = useSensorFusion();
-  const { heading, pitch, roll } = ahrs.getEulerAngles();
-  const { x, y, z, w } = ahrs.toVector();
-  const compass = useCompass();
-  const displayHeading = 360-Math.round(toDegrees(heading))-90;
-  const displayRoll = Math.round(toDegrees(roll))-90;  //front-back tilt (ios = android + 180)
-  const displayCompass = Math.round(toDegrees(compass)) % 360;
-  return (<>
-    <Text>
-      Heading: {displayHeading}°{'\n'}
-      Roll: {displayRoll}°{'\n'}
-      Compass: {displayCompass}°{'\n'}
-
-    </Text>
-	<Text
-      children={Math.round(toDegrees(z))}
-    /></>
-  );
-};
+const locationUpdateIntervalSeconds = 10;
 
 class SettingsScreen extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			accessCode: 'jahdksfkjahl',
-			sensor: {
-				heading: 0,
-				pitch: 0,
-				roll: 0,
-				compass: 0
-			}
+			broadcasting: false,
+			loading: false
 		}
 	}
 
 	textAccessCode() {
-		Communications.text(null, `My Hawkeye Access Code is ${this.state.accessCode}`);
+		Communications.text(null, `My Hawkeye Access Code is ${this.props.location.accessCode}`);
 	}
 
 	copyToClipboard() {
 		Vibration.vibrate(50);
-		Clipboard.setString(this.state.accessCode);
+		Clipboard.setString(this.props.location.accessCode);
 	}
 
 	getLocationOnce() {
-
-
 		GetLocation.getCurrentPosition({
 		    enableHighAccuracy: true,
-		    timeout: 15000,
+		    timeout: locationUpdateIntervalSeconds * 1000,
 		})
 		.then(location => {
-			const { bearing, course } = location;
-
-		    console.log("Heading: ", bearing, "   ", course);
+			const { altitude, latitude, longitude, time } = location;
+			console.log("Updating location", this.props.location.accessCode, ", " , location)
+			this.props.updateLocation({altitude, latitude,longitude, time}, this.props.location.accessCode)
+			this.setState({...this.state, loading: false})
 		})
-		.catch(error => {
-		    const { code, message } = error;
-		    console.warn(code, message);
-		})
+	}
 
+	startRecordingLocation() {
+		this.getLocationOnce();
+		const interval = setInterval((instance) => {
+			instance.getLocationOnce()
+		}, locationUpdateIntervalSeconds * 1000, this);
+		this.setState({...this.state, interval: interval, broadcasting: true, loading: true});
+	}
 
-		// Geolocation.getCurrentPosition(
-	    //     (position) => {
-	    //       console.log(position);
-	    //     },
-	    //     (error) => {
-	    //       // See error code charts below.
-	    //       console.log(error.code, error.message);
-	    //     },
-	    //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-	    // );
-
+	stopRecordingLocation() {
+		clearInterval(this.state.interval);
+		this.setState({...this.state, interval: null, broadcasting: false, loading: false});
 	}
 
 	toggleLocationSwitch() {
-		this.getLocationOnce();
+		console.log("Button Press")
+		const isCurrentlyRecording = this.state.broadcasting;
+		if (isCurrentlyRecording) {
+			this.stopRecordingLocation();
+		} else {
+			this.startRecordingLocation();
+		}
+	}
+
+	getRecordingButtonText() {
+		if (this.state.broadcasting)
+			return "Stop Broadcasting";
+		return "Start Sharing Location";
 	}
 
 	deleteLocationData() {
-		// console.log("Checkpoint 1")
-		// const { ahrs } = useSensorFusion();
-		// console.log("Checkpoint 2")
-		//   const { heading, pitch, roll } = ahrs.getEulerAngles();
-		//   console.log("Checkpoint 3")
-		//   const compass = useCompass();
-		//   console.log("Checkpoint 4")
-		//
-		// 	  this.setState({...this.state, sensor:{
-		// 		  heading:heading, pitch:pitch, roll:roll, compass:compass}})
-
-
+		this.props.deleteLocation(this.props.location.accessCode)
 	}
 
-	componentWillMount() {
-		Geolocation.requestAuthorization("whenInUse");
+	shouldDisableDeleteButton() {
+		if (this.state.broadcasting || !this.props.location.accessCode)
+			return true;
+		return false;
 	}
+
+	// componentWillMount() {
+	// 	// Geolocation.requestAuthorization("whenInUse");
+	// }
 
 	render() {
-		const {heading, pitch, roll, compass} = this.state.sensor;
 		return (
 			<SafeAreaView style={styles.safeAreaView}>
 				<View style={styles.container}>
 					<Text h3>My Access Code</Text>
-					<Text h4 style={styles.accessCode}>{this.state.accessCode}</Text>
+					<Text h4 style={styles.accessCode}>{this.props.location.accessCode}</Text>
 
 					<View style={styles.buttonsContainer}>
 						<Button
 							containerStyle={styles.accessCodeButtons}
 							title="Text"
 							onPress={this.textAccessCode.bind(this)}
-							disabled={!this.state.accessCode} />
+							disabled={!this.props.location.accessCode} />
 						<Button
 						 	containerStyle={styles.accessCodeButtons}
 							title="Copy"
 							onPress={this.copyToClipboard.bind(this)}
-							disabled={!this.state.accessCode} />
+							disabled={!this.props.location.accessCode} />
 					</View>
 					<View style={styles.middleContainer}>
-						<Text h1>Broadcasting...</Text>
-						<SensorFusionProvider>
-						<Indicator />
-						</SensorFusionProvider>
+						{ this.state.broadcasting
+							? <Text h1>Broadcasting...</Text>
+							: null
+						}
+
+
 					</View>
 					<View style={styles.locationButtonsContainer}>
 						<Button
 							containerStyle={styles.locationButtons}
-							title="Start Sharing Location"
-							onPress={this.toggleLocationSwitch.bind(this)} />
+							title={this.getRecordingButtonText()}
+							onPress={this.toggleLocationSwitch.bind(this)}
+							loading={this.state.loading}
+							/>
 						<Button
 							containerStyle={styles.locationButtons}
 							title="Delete Location Data"
-							onPress={this.deleteLocationData.bind(this)} />
+							onPress={this.deleteLocationData.bind(this)}
+							disabled={this.shouldDisableDeleteButton()}
+							/>
 					</View>
 				</View>
 			</SafeAreaView>
@@ -158,4 +137,11 @@ SettingsScreen.navigationOptions = {
 	title: 'Settings  ',
 }
 
-export default SettingsScreen;
+const mapStateToProps = state => {
+	return state
+}
+
+export default connect(
+	mapStateToProps,
+	{updateLocation, deleteLocation})
+	(SettingsScreen);

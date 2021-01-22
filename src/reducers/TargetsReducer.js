@@ -2,7 +2,8 @@
 const INITIAL_STATE = {
 	targets: {
 
-	}
+	},
+	activeTarget: ''
 };
 
 export default (state=INITIAL_STATE, action) => {
@@ -16,6 +17,8 @@ export default (state=INITIAL_STATE, action) => {
 			var targets = { ...state.targets };
 			delete targets[accessCode];
 			return {...state, targets: targets }
+		case 'track_target':
+			return {...state, activeTarget: action.payload}
 		default:
 			return state;
 	}

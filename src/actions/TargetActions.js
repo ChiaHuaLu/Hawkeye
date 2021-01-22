@@ -17,4 +17,11 @@ export const fetchTargets = () => {
 	return ({
 		type: 'fetch_targets'
 	})
-}
+};
+
+export const trackTarget = (accessCode) => {
+	return ({
+		type: 'track_target',
+		payload: accessCode
+	})
+};
