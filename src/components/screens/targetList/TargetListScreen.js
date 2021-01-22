@@ -25,7 +25,7 @@ class TargetListScreen extends Component {
 				}} />
 		);
 	}
-	
+
 	renderNoItemsMessage() {
 		return (
 			<View style={styles.noTargetsView}>
@@ -50,6 +50,7 @@ class TargetListScreen extends Component {
 		this.props.fetchTargets();
 	}
 }
+
 const mapStateToProps = (state) => {
 	const targets = _.map(state.targets.targets, (object, accessCode) => {
 		return {

@@ -5,7 +5,9 @@ import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
 import styles from './styles';
-import { deleteTarget, trackTarget } from '../../../actions/TargetActions';
+import { deleteTarget, toggleTrackTarget } from '../../../actions/TargetActions';
+import { fetchLocation } from '../../../actions/LocationActions';
+import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
 
 class TargetListItem extends Component {
 	constructor(props) {
@@ -21,7 +23,7 @@ class TargetListItem extends Component {
 	}
 
 	trackTarget() {
-		this.props.trackTarget(this.props.accessCode);
+		this.props.toggleTrackTarget(this.props.accessCode);
 	}
 
 	listItemStyle() {
@@ -30,8 +32,20 @@ class TargetListItem extends Component {
 		return {...styles.listItem, ...styles.activeTarget};
 	}
 
+	componentWillMount() {
+		this.props.fetchLocation(this.props.accessCode);
+	}
+
+	getStatusText() {
+		const location = this.props.location.targetLocations[this.props.accessCode];
+		if (location.time) {
+			const differenceInSeconds = Math.round((Date.now() - location.time) / 1000);
+			return `Updated ${getTimeDifferenceText(differenceInSeconds)}`;
+		}
+		return "Unavailable"
+	}
+
 	render() {
-		console.log(this.listItemStyle())
 		const swipeDeleteButton = [
 			{
 				text: 'Delete',
@@ -53,7 +67,7 @@ class TargetListItem extends Component {
 					<TouchableOpacity onPress={this.goToTargetManagement.bind(this)}>
 						<View style={this.listItemStyle()}>
 							<Text style={[styles.itemDescription, styles.itemDetails]}>{this.props.name}</Text>
-							<Text style={[styles.itemAccessCode, styles.itemStatus]}>{this.props.status}</Text>
+							<Text style={[styles.itemAccessCode, styles.itemStatus]}>{this.getStatusText()}</Text>
 						</View>
 						<Divider />
 					</TouchableOpacity>
@@ -64,11 +78,10 @@ class TargetListItem extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log(state.targets.activeTarget)
 	return state;
 };
 
 export default connect(
 	mapStateToProps,
-	{deleteTarget, trackTarget}
+	{deleteTarget, toggleTrackTarget, fetchLocation}
 )(TargetListItem);
