@@ -10,13 +10,42 @@ import Geolocation from 'react-native-geolocation-service';
 import { DeviceEventEmitter } from 'react-native';
 import DeviceAngles from 'react-native-device-angles';
 
+import SensorFusionProvider, { useSensorFusion, useCompass, toDegrees } from 'react-native-sensor-fusion';
+
+const Indicator = () => {
+
+  const { ahrs } = useSensorFusion();
+  const { heading, pitch, roll } = ahrs.getEulerAngles();
+  const { x, y, z, w } = ahrs.toVector();
+  const compass = useCompass();
+  const displayHeading = 360-Math.round(toDegrees(heading))-90;
+  const displayRoll = Math.round(toDegrees(roll))-90;  //front-back tilt (ios = android + 180)
+  const displayCompass = Math.round(toDegrees(compass)) % 360;
+  return (<>
+    <Text>
+      Heading: {displayHeading}°{'\n'}
+      Roll: {displayRoll}°{'\n'}
+      Compass: {displayCompass}°{'\n'}
+
+    </Text>
+	<Text
+      children={Math.round(toDegrees(z))}
+    /></>
+  );
+};
 
 class SettingsScreen extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			accessCode: 'jahdksfkjahl'
+			accessCode: 'jahdksfkjahl',
+			sensor: {
+				heading: 0,
+				pitch: 0,
+				roll: 0,
+				compass: 0
+			}
 		}
 	}
 
@@ -65,13 +94,18 @@ class SettingsScreen extends Component {
 	}
 
 	deleteLocationData() {
-		console.log(DeviceAngles);
-		// DeviceAngles.setDeviceMotionUpdateInterval(1);
-		// DeviceAngles.startMotionUpdates();
-		// DeviceEventEmitter.addListener('AnglesData', function (data) {
-		//   console.log("Pitch:", data.pitch, ",   Roll:", data.roll, ",   Yaw:", data.yaw);
+		// console.log("Checkpoint 1")
+		// const { ahrs } = useSensorFusion();
+		// console.log("Checkpoint 2")
+		//   const { heading, pitch, roll } = ahrs.getEulerAngles();
+		//   console.log("Checkpoint 3")
+		//   const compass = useCompass();
+		//   console.log("Checkpoint 4")
 		//
-		// });
+		// 	  this.setState({...this.state, sensor:{
+		// 		  heading:heading, pitch:pitch, roll:roll, compass:compass}})
+
+
 	}
 
 	componentWillMount() {
@@ -79,6 +113,7 @@ class SettingsScreen extends Component {
 	}
 
 	render() {
+		const {heading, pitch, roll, compass} = this.state.sensor;
 		return (
 			<SafeAreaView style={styles.safeAreaView}>
 				<View style={styles.container}>
@@ -99,6 +134,9 @@ class SettingsScreen extends Component {
 					</View>
 					<View style={styles.middleContainer}>
 						<Text h1>Broadcasting...</Text>
+						<SensorFusionProvider>
+						<Indicator />
+						</SensorFusionProvider>
 					</View>
 					<View style={styles.locationButtonsContainer}>
 						<Button

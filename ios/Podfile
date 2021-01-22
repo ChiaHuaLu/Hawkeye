@@ -10,6 +10,8 @@ target 'hawkeye' do
 
 
 
+  pod 'RNSensors', :path => '../node_modules/react-native-sensors'
+
   target 'hawkeyeTests' do
     inherit! :complete
     # Pods for testing
