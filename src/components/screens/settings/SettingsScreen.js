@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Vibration } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { Text, Input, Button } from 'react-native-elements';
 import Communications from 'react-native-communications'
@@ -24,6 +24,7 @@ class SettingsScreen extends Component {
 	}
 
 	copyToClipboard() {
+		Vibration.vibrate(50);
 		Clipboard.setString(this.state.accessCode);
 	}
 

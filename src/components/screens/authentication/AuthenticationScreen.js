@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, View, SafeAreaView, Vibration } from 'react-native';
 import { connect } from 'react-redux';
 import { signIn, register, clearError } from '../../../actions/AuthActions'
 import AuthForm from './authForm';
@@ -45,7 +45,8 @@ class AuthenticationScreen extends Component {
 		var props = this.state.isRegisterMode ? registerUI : signInUI;
 		const { error } = this.props;
 
-		if (error) {
+		if (error && Object.keys(error).length !== 0) {
+			Vibration.vibrate(500);
 			if (error.code === 'auth/invalid-email') {
 				props.emailError = error.message
 			} else {
