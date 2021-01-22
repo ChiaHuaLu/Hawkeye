@@ -2,7 +2,10 @@
 export const addTarget = (description, accessCode) => {
 	return ({
 		type: 'add_target',
-		payload: {[accessCode]: {name: description}}
+		payload: {
+			accessCode: accessCode,
+			name: description
+		}
 	});
 };
 
@@ -19,7 +22,7 @@ export const fetchTargets = () => {
 	})
 };
 
-export const trackTarget = (accessCode) => {
+export const toggleTrackTarget = (accessCode) => {
 	return ({
 		type: 'track_target',
 		payload: accessCode

@@ -1,8 +1,29 @@
 import firebase from 'firebase';
 
+export const fetchLocation = (accessCode) => {
+	return (dispatch) => {
+		firebase.database().ref(`location/${accessCode}`).once('value').then((snapshot) => {
+			const payload = {[accessCode]: snapshot.val()};
+			dispatch({
+				type: 'fetch_location',
+				payload: payload
+			})
+		});
+
+		// firebase.database().ref(`location/${accessCode}`).on('value', (snapshot) => {
+		// 	console.log("Fetch", snapshot.val());
+		// 	const payload = {[accessCode]: snapshot.val()};
+		// 	// console.log("Payload", payload)
+		// 	dispatch({
+		// 		type: 'fetch_location',
+		// 		payload: payload
+		// 	})
+		// });
+	}
+};
+
 export const updateLocation = (location, accessCode) => {
 	return (dispatch) => {
-		//Access Firebase
 		if (accessCode) {
 			firebase.database().ref(`location/${accessCode}`).update(location)
 		} else {
@@ -14,7 +35,10 @@ export const updateLocation = (location, accessCode) => {
 
 		dispatch({
 			type: 'location_updated',
-			payload: accessCode
+			payload: {
+				currentLocation: location,
+				accessCode: accessCode
+			}
 		})
 	}
 };

@@ -1,24 +1,28 @@
 
 const INITIAL_STATE = {
-	targets: {
-
-	},
+	targets: {},
 	activeTarget: ''
 };
 
 export default (state=INITIAL_STATE, action) => {
 	switch (action.type) {
 		case 'add_target':
-			return {...state, targets: {...state.targets, ...action.payload}};
+			return {...state, targets: {...state.targets, ...{[action.payload.accessCode]: {name: action.payload.name}}}};
 		case 'fetch_targets':
-			return {...state};
+			return {...state, targets: state.targets};
 		case 'delete_target':
 			const accessCode = action.payload.accessCode;
-			var targets = { ...state.targets };
-			delete targets[accessCode];
-			return {...state, targets: targets }
+			var updatedTargets = { ...state.targets };
+			delete updatedTargets[accessCode];
+			var currentActiveTarget = state.activeTarget;
+			if (currentActiveTarget === accessCode)
+				currentActiveTarget = ''
+			return {...state, targets: {...updatedTargets}, activeTarget: currentActiveTarget};
 		case 'track_target':
-			return {...state, activeTarget: action.payload}
+			var newActiveTarget = action.payload;
+			if (state.activeTarget === newActiveTarget)
+				newActiveTarget = '';
+			return {...state, activeTarget: newActiveTarget}
 		default:
 			return state;
 	}
