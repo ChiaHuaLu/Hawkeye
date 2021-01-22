@@ -4,6 +4,11 @@ import Clipboard from '@react-native-community/clipboard';
 import { Text, Input, Button } from 'react-native-elements';
 import Communications from 'react-native-communications'
 import styles from './styles';
+import GetLocation from 'react-native-get-location';
+import Geolocation from 'react-native-geolocation-service';
+
+
+
 
 class SettingsScreen extends Component {
 
@@ -22,12 +27,46 @@ class SettingsScreen extends Component {
 		Clipboard.setString(this.state.accessCode);
 	}
 
-	toggleLocationSwitch() {
+	getLocationOnce() {
+
+		GetLocation.getCurrentPosition({
+		    enableHighAccuracy: true,
+		    timeout: 15000,
+		})
+		.then(location => {
+		    console.log(location);
+		})
+		.catch(error => {
+		    const { code, message } = error;
+		    console.warn(code, message);
+		})
+
+
+		// Geolocation.getCurrentPosition(
+	    //     (position) => {
+	    //       console.log(position);
+	    //     },
+	    //     (error) => {
+	    //       // See error code charts below.
+	    //       console.log(error.code, error.message);
+	    //     },
+	    //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+	    // );
 
 	}
 
-	deleteLocationData() {
+	toggleLocationSwitch() {
+		this.getLocationOnce();
+	}
 
+	deleteLocationData() {
+		console.log(UNI);
+
+
+	}
+
+	componentWillMount() {
+		Geolocation.requestAuthorization("whenInUse");
 	}
 
 	render() {
@@ -55,7 +94,7 @@ class SettingsScreen extends Component {
 					<View style={styles.locationButtonsContainer}>
 						<Button
 							containerStyle={styles.locationButtons}
-							title="Stop Sharing Location"
+							title="Start Sharing Location"
 							onPress={this.toggleLocationSwitch.bind(this)} />
 						<Button
 							containerStyle={styles.locationButtons}
