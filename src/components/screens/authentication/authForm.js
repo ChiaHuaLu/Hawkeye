@@ -3,15 +3,13 @@ import { Card, Text, Divider, Input, Button } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
 import { authFormStyles } from './styles';
 
-
-
 class AuthForm extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
-			email: 'krisswolf.kw@gmail.com',
-			password: '11111111',
+			email: '',
+			password: '',
 			loading: false,
 			message: ''
 		}

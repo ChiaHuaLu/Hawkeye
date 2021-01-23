@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, SafeAreaView, Vibration } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import firebase from 'firebase';
+
 import { signIn, register, clearError, dispatchLoadingAction } from '../../../actions/AuthActions'
 import AuthForm from './authForm';
 import { styles } from './styles';
-
 
 class AuthenticationScreen extends Component {
 
@@ -14,6 +16,12 @@ class AuthenticationScreen extends Component {
 			isRegisterMode:false,
 			loading: false
 		}
+		this.props.clearError();
+		firebase.auth().onAuthStateChanged((user) => {
+	      if (user) {
+			  Actions.mainFlow();
+		  }
+	    });
 	}
 
 	toggleAuthenticationMethod() {
