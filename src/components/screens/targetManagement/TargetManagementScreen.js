@@ -16,6 +16,7 @@ class TargetManagementScreen extends Component {
 		if (this.props.edit)
 			this.props.deleteTarget(this.props.edit.accessCode);
 		this.props.addTarget(this.state.name, this.state.accessCode);
+		this.props.fetchLocation(this.state.accessCode);
 		Actions.pop();
 	}
 
@@ -49,7 +50,7 @@ class TargetManagementScreen extends Component {
 		this.setState({...this.state, [key]: value});
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const target = this.props.edit;
 		if (target) {
 			this.enableOrDisableSaveButton(null, null, true);
@@ -79,7 +80,7 @@ class TargetManagementScreen extends Component {
 		if (!currentLocation.latitude)
 			currentLocation = lastLocation;
 
-		if (lastLocation ) {
+		if (lastLocation && lastLocation.latitude ) {
 			const differenceInSeconds = Math.round((Date.now() - lastLocation.time) / 1000);
 			return (
 				<View style={styles.testView}>

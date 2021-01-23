@@ -72,11 +72,7 @@ class SettingsScreen extends Component {
 			return true;
 		return false;
 	}
-
-	// componentWillMount() {
-	// 	// Geolocation.requestAuthorization("whenInUse");
-	// }
-
+	
 	render() {
 		return (
 			<SafeAreaView style={styles.safeAreaView}>

@@ -45,7 +45,7 @@ class TargetListScreen extends Component {
 		);
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.fetchTargets();
 	}
 }

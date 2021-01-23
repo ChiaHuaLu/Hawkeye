@@ -11,7 +11,7 @@ import rootReducer from './reducers'
 
 class App extends Component {
 
-	componentWillMount() {
+	componentDidMount() {
 		var firebaseConfig = {
 			apiKey: "AIzaSyDJIDDwuSJgaC85r_F-_NylxJH51C2eWNw",
 			authDomain: "projecthawkeye-bc56f.firebaseapp.com",

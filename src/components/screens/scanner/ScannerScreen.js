@@ -20,7 +20,7 @@ class ScannerScreen extends Component {
 		}
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		const getLocation = ((location) => {
 			if (!this.props.navigation.isFocused()) {
 				clearInterval(this.state.interval);
@@ -37,11 +37,22 @@ class ScannerScreen extends Component {
 	getDirectionsToTarget() {
 		const { activeTarget } = this.props.targets;
 		if (activeTarget === '') {
-			return <Text h3>No Active Target</Text>
+			return (
+				<View style={styles.directionsDisplay}>
+					<Text h3>No Active Target</Text>
+				</View>
+			);
 		}
-		const targetAccessCode = this.props.targets.activeTarget;
+		const targetLocation = this.props.location.targetLocations[activeTarget];
+		if (targetLocation === null ) {
+			return (
+				<View style={styles.directionsDisplay}>
+					<Text h3>Target Unavailable</Text>
+				</View>
+			);
+		}
 		const myLocation = this.props.location.currentLocation;
-		const targetLocation = this.props.location.targetLocations[targetAccessCode];
+
 		const distance = directDistance(myLocation, targetLocation);
 		const bearing = bearingToTarget(myLocation, targetLocation);
 		const elevationAngle = elevationToTarget(myLocation, targetLocation);
@@ -61,26 +72,22 @@ class ScannerScreen extends Component {
 					autoFocus
 					captureAudio={false}
 
-					showViewFinder
-					ref={ref => {
-						this.camera = ref;
-					}}
 					style={styles.cameraView}
 					useNativeZoom={false}
 					type={RNCamera.Constants.Type.back}>
 
-						<View style={styles.reticleContainer}>
-							<View style={styles.reticle}>
+											<View style={styles.reticleContainer}>
+												<View style={styles.reticle} />
+											</View>
 
-							</View>
-						</View>
+											<View style={styles.container}>
+												{this.getDirectionsToTarget()}
+												<SensorFusionProvider>
+													<Indicator />
+												</SensorFusionProvider>
 
-						<View style={styles.container}>
-							{this.getDirectionsToTarget()}
-							<SensorFusionProvider>
-								<Indicator />
-							</SensorFusionProvider>
-						</View>
+											</View>
+
 				</RNCamera>
 
 			</SafeAreaView>
@@ -92,17 +99,17 @@ const Indicator = () => {
 
 	const { ahrs } = useSensorFusion();
 	const { heading, pitch, roll } = ahrs.getEulerAngles();
-	const headingDegrees = ((360+270-toDegrees(heading))%360).toFixed(2)
-	const rollDegrees = ((toDegrees(roll)-90)%360).toFixed(2)
+	const headingDegrees = ((360+270-toDegrees(heading))%360).toFixed(2);
+	const rollDegrees = ((toDegrees(roll)-90)%360).toFixed(2);
 
 	const displayHeading = headingDegrees;
 	const displayRoll = rollDegrees;  //front-back tilt (ios = android + 180)
 	return (
 		<View style={styles.indicator}>
-		<Text>
-		Heading: {displayHeading}°{'\n'}
-		Roll: {displayRoll}°{'\n'}
-		</Text>
+			<Text>
+			Heading: {displayHeading}°{'\n'}
+			Roll: {displayRoll}°{'\n'}
+			</Text>
 		</View>
 	);
 };

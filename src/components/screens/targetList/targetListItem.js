@@ -32,7 +32,7 @@ class TargetListItem extends Component {
 		return {...styles.listItem, ...styles.activeTarget};
 	}
 
-	componentWillMount() {
+	componentDidMount() {
 		this.props.fetchLocation(this.props.accessCode);
 	}
 
