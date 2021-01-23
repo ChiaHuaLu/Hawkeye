@@ -3,9 +3,11 @@ import { View, SafeAreaView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Text, Input, Button } from 'react-native-elements';
-import { addTarget, deleteTarget } from '../../../actions/TargetActions';
-import { fetchLocation } from '../../../actions/LocationActions';
 import MapView, { Marker } from 'react-native-maps';
+
+import { fetchLocation } from '../../../actions/LocationActions';
+import { addTarget, deleteTarget } from '../../../actions/TargetActions';
+import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
 import styles from './styles';
 
 class TargetManagementScreen extends Component {
@@ -77,12 +79,12 @@ class TargetManagementScreen extends Component {
 		if (!currentLocation.latitude)
 			currentLocation = lastLocation;
 
-		console.log("Current", currentLocation)
-
 		if (lastLocation ) {
+			const differenceInSeconds = Math.round((Date.now() - lastLocation.time) / 1000);
 			return (
 				<View style={styles.testView}>
 				<Text>{lastLocation.latitude}, {lastLocation.longitude}</Text>
+				<Text>Last updated {getTimeDifferenceText(differenceInSeconds)}</Text>
 				<MapView
 					style={styles.map}
 					showsUserLocation
