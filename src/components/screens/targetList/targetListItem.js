@@ -38,7 +38,7 @@ class TargetListItem extends Component {
 
 	getStatusText() {
 		const location = this.props.location.targetLocations[this.props.accessCode];
-		if (location.time) {
+		if (location && location.time) {
 			const differenceInSeconds = Math.round((Date.now() - location.time) / 1000);
 			return `Updated ${getTimeDifferenceText(differenceInSeconds)}`;
 		}

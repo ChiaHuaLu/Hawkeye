@@ -1,14 +1,14 @@
 
 
-function degrees_to_radians(degrees) {
+export const degrees_to_radians = (degrees) => {
 	return degrees * (Math.PI/180);
 }
 
-function radians_to_degrees(radians) {
-	return degrees = radians * (180/Math.PI);
+export const radians_to_degrees = (radians) => {
+	return radians * (180/Math.PI);
 }
 
-function bearing(location, target) {
+export const bearingToTarget = (location, target) => {
 	const { latitude, longitude } = location;
 	const { latitude: targetLatitude, longitude: targetLongitude} = target;
 
@@ -23,13 +23,18 @@ function bearing(location, target) {
 	const x = Math.cos(angleToViewerNS) * Math.sin(angleToViewerEW) - Math.sin(angleToViewerNS) * Math.cos(angleToViewerEW) * Math.cos(deltaAngleEW);
 	const bearingTotal = radians_to_degrees(Math.atan2(y,x));
 	const bearing = ( (bearingTotal + 360) % 360 );
-
-	console.log("Heading:", bearing)
-
 	return bearing;
 }
 
-function groundDistanceMeters(location, target) {
+export const elevationToTarget = (location, target) => {
+	const deltaHeight = target.altitude - location.altitude;
+	if (deltaHeight === 0)
+		return 0;
+	const distanceBetween = groundDistanceMeters(location, target);
+	return radians_to_degrees(Math.atan(deltaHeight/distanceBetween))
+}
+
+export const groundDistanceMeters = (location, target) => {
 	const { latitude, longitude } = location;
 	const { latitude: targetLatitude, longitude: targetLongitude} = target;
 
@@ -48,7 +53,7 @@ function groundDistanceMeters(location, target) {
 	return distance;
 }
 
-function meterToYard(meters) {
+export const meterToYard = (meters) => {
 	const yardsPerMeter = 1.09361;
 	return meters * yardsPerMeter;
 }

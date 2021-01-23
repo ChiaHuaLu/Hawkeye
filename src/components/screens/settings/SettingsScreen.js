@@ -5,7 +5,8 @@ import { Text, Input, Button } from 'react-native-elements';
 import Clipboard from '@react-native-community/clipboard';
 import Communications from 'react-native-communications';
 import GetLocation from 'react-native-get-location';
-import { updateLocation, deleteLocation } from '../../../actions/LocationActions';
+import { uploadCurrentLocation, deleteLocation } from '../../../actions/LocationActions';
+import { getLocationInterval } from '../../../helpers/locationHelper';
 import styles from './styles';
 
 
@@ -30,24 +31,15 @@ class SettingsScreen extends Component {
 		Clipboard.setString(this.props.location.accessCode);
 	}
 
-	getLocationOnce() {
-		GetLocation.getCurrentPosition({
-		    enableHighAccuracy: true,
-		    timeout: locationUpdateIntervalSeconds * 1000,
-		})
-		.then(location => {
-			const { altitude, latitude, longitude, time } = location;
-			console.log("Updating location", this.props.location.accessCode, ", " , location)
-			this.props.updateLocation({altitude, latitude,longitude, time}, this.props.location.accessCode)
-			this.setState({...this.state, loading: false})
-		})
-	}
-
 	startRecordingLocation() {
-		this.getLocationOnce();
-		const interval = setInterval((instance) => {
-			instance.getLocationOnce()
-		}, locationUpdateIntervalSeconds * 1000, this);
+		const uploadUpdatedLocation = ((location) => {
+			const { altitude, latitude, longitude, time } = location;
+			const { accessCode } = this.props.location
+
+			this.props.uploadCurrentLocation(location, accessCode)
+			this.setState({...this.state, loading: false})
+		});
+		const interval = getLocationInterval(uploadUpdatedLocation, locationUpdateIntervalSeconds, locationUpdateIntervalSeconds);
 		this.setState({...this.state, interval: interval, broadcasting: true, loading: true});
 	}
 
@@ -57,7 +49,6 @@ class SettingsScreen extends Component {
 	}
 
 	toggleLocationSwitch() {
-		console.log("Button Press")
 		const isCurrentlyRecording = this.state.broadcasting;
 		if (isCurrentlyRecording) {
 			this.stopRecordingLocation();
@@ -143,5 +134,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{updateLocation, deleteLocation})
+	{uploadCurrentLocation, deleteLocation})
 	(SettingsScreen);

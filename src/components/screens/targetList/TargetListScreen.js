@@ -19,8 +19,7 @@ class TargetListScreen extends Component {
 					return (
 						<TargetListItem
 							name={item.name}
-							accessCode={item.accessCode}
-							status={item.status || 'NA'} />
+							accessCode={item.accessCode} />
 					);
 				}} />
 		);
@@ -58,7 +57,6 @@ const mapStateToProps = (state) => {
 			accessCode: accessCode
 		}
 	})
-
 	return {...state, targets: targets};
 }
 
