@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { View, SafeAreaView } from 'react-native';
 import { connect } from 'react-redux';
 import { Text } from 'react-native-elements';
-import SensorFusionProvider, { useSensorFusion, toDegrees } from 'react-native-sensor-fusion';
+import SensorFusionProvider from 'react-native-sensor-fusion';
 import { RNCamera } from 'react-native-camera';
 
 import { fetchLocation, updateCurrentLocation } from '../../../actions/LocationActions';
-import { bearingToTarget, directDistance, elevationToTarget } from '../../../helpers/calculator';
 import { getLocationInterval } from '../../../helpers/locationHelper';
+import NavigationDisplay from './navigationDisplay'
 import styles from './styles';
 
 
@@ -34,36 +34,7 @@ class ScannerScreen extends Component {
 		this.setState({...this.state, interval});
 	}
 
-	getDirectionsToTarget() {
-		const { activeTarget } = this.props.targets;
-		if (activeTarget === '') {
-			return (
-				<View style={styles.directionsDisplay}>
-					<Text h3>No Active Target</Text>
-				</View>
-			);
-		}
-		const targetLocation = this.props.location.targetLocations[activeTarget];
-		if (targetLocation === null ) {
-			return (
-				<View style={styles.directionsDisplay}>
-					<Text h3>Target Unavailable</Text>
-				</View>
-			);
-		}
-		const myLocation = this.props.location.currentLocation;
 
-		const distance = directDistance(myLocation, targetLocation);
-		const bearing = bearingToTarget(myLocation, targetLocation);
-		const elevationAngle = elevationToTarget(myLocation, targetLocation);
-		return (
-			<View style={styles.directionsDisplay}>
-				<Text h5>Direct Distance To Target:{distance} m</Text>
-				<Text h5>Heading To Target: {bearing}°</Text>
-				<Text h5>Elevation To Target: {elevationAngle}°</Text>
-			</View>
-		);
-	}
 
 	render() {
 		return (
@@ -75,18 +46,16 @@ class ScannerScreen extends Component {
 					style={styles.cameraView}
 					useNativeZoom={false}
 					type={RNCamera.Constants.Type.back}>
+						<SensorFusionProvider>
+							<NavigationDisplay
+							 	targets={this.props.targets}
+								location={this.props.location} />
+						</SensorFusionProvider>
+						<View style={styles.reticleContainer}>
+							<View style={styles.reticle} />
+						</View>
 
-											<View style={styles.reticleContainer}>
-												<View style={styles.reticle} />
-											</View>
-
-											<View style={styles.container}>
-												{this.getDirectionsToTarget()}
-												<SensorFusionProvider>
-													<Indicator />
-												</SensorFusionProvider>
-
-											</View>
+					
 
 				</RNCamera>
 
@@ -95,24 +64,7 @@ class ScannerScreen extends Component {
 	}
 }
 
-const Indicator = () => {
 
-	const { ahrs } = useSensorFusion();
-	const { heading, pitch, roll } = ahrs.getEulerAngles();
-	const headingDegrees = ((360+270-toDegrees(heading))%360).toFixed(2);
-	const rollDegrees = ((toDegrees(roll)-90)%360).toFixed(2);
-
-	const displayHeading = headingDegrees;
-	const displayRoll = rollDegrees;  //front-back tilt (ios = android + 180)
-	return (
-		<View style={styles.indicator}>
-			<Text>
-			Heading: {displayHeading}°{'\n'}
-			Roll: {displayRoll}°{'\n'}
-			</Text>
-		</View>
-	);
-};
 
 ScannerScreen.navigationOptions = {
 	title: 'Scan'
