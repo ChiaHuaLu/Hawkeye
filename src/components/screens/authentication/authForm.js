@@ -46,6 +46,7 @@ class AuthForm extends Component {
 							errorMessage={this.props.passwordError} />
 					</View>
 					<Button
+						loading={this.props.loading}
 						style={authFormStyles.button}
 						title={this.props.onSubmitText}
 						onPress={()=>{this.props.onSubmitAction(this.state)}} />

@@ -7,11 +7,11 @@ export const clearError = () => {
 	}
 };
 
-const dispatchLoadingAction = (dispatch) => {
-	dispatch({
+export const dispatchLoadingAction = () => {
+	return {
 		type: 'loading'
-	})
-}
+	};
+};
 
 export const signIn = (email, password) => {
 	return (dispatch) => {

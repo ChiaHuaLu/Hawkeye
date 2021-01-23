@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, SafeAreaView, Vibration } from 'react-native';
 import { connect } from 'react-redux';
-import { signIn, register, clearError } from '../../../actions/AuthActions'
+import { signIn, register, clearError, dispatchLoadingAction } from '../../../actions/AuthActions'
 import AuthForm from './authForm';
 import { styles } from './styles';
 
@@ -12,6 +12,7 @@ class AuthenticationScreen extends Component {
 		super(props);
 		this.state={
 			isRegisterMode:false,
+			loading: false
 		}
 	}
 
@@ -21,10 +22,12 @@ class AuthenticationScreen extends Component {
 	}
 
 	authenticateUser({email, password}) {
+		this.props.dispatchLoadingAction();
 		this.props.signIn(email, password);
 	}
 
 	registerUser({email, password}) {
+		this.props.dispatchLoadingAction();
 		this.props.register(email, password);
 	}
 
@@ -43,7 +46,7 @@ class AuthenticationScreen extends Component {
 			onSubmitText:'Register'
 		};
 		var props = this.state.isRegisterMode ? registerUI : signInUI;
-		const { error } = this.props;
+		const { error } = this.props.auth;
 
 		if (error && Object.keys(error).length !== 0) {
 			Vibration.vibrate(500);
@@ -62,6 +65,7 @@ class AuthenticationScreen extends Component {
 		return (
 			<SafeAreaView style={styles.authScreenContainer}>
 				<AuthForm
+					loading={this.props.auth.loading}
 					style={styles.authForm}
 					authText={authFormProps.authText}
 					emailError={authFormProps.emailError}
@@ -77,10 +81,10 @@ class AuthenticationScreen extends Component {
 }
 
 const mapStateToProps = state => {
-	return {error: state.auth.error};
+	return state;
 }
 
 export default connect(
 	mapStateToProps,
-	{signIn, register, clearError})
+	{signIn, register, clearError, dispatchLoadingAction})
 	(AuthenticationScreen);
