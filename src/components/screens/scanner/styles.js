@@ -1,3 +1,5 @@
+const reticleSize = 30;
+
 export default styles = {
 	directionsDisplay: {
 		padding: 20,
@@ -20,10 +22,11 @@ export default styles = {
 		flex: 1
 	},
 	reticle: {
-		height: 20,
-		width: 20,
+		height: reticleSize,
+		width: reticleSize,
 		borderWidth: 2,
-		borderColor: 'black'
+		borderColor: 'red',
+		borderRadius: reticleSize/2
 	},
 	reticleContainer: {
 		position: 'absolute',
