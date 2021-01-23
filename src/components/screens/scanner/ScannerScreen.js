@@ -5,7 +5,7 @@ import { Text } from 'react-native-elements';
 import SensorFusionProvider, { useSensorFusion, toDegrees } from 'react-native-sensor-fusion';
 
 import { fetchLocation, updateCurrentLocation } from '../../../actions/LocationActions';
-import { bearingToTarget, groundDistanceMeters, elevationToTarget } from '../../../helpers/calculator';
+import { bearingToTarget, directDistance, elevationToTarget } from '../../../helpers/calculator';
 import { getLocationInterval } from '../../../helpers/locationHelper';
 import styles from './styles';
 
@@ -41,14 +41,15 @@ class ScannerScreen extends Component {
 		const targetAccessCode = this.props.targets.activeTarget;
 		const myLocation = this.props.location.currentLocation;
 		const targetLocation = this.props.location.targetLocations[targetAccessCode];
-		const groundDistance = groundDistanceMeters(myLocation, targetLocation);
+		const distance = directDistance(myLocation, targetLocation);
 		const bearing = bearingToTarget(myLocation, targetLocation);
 		const elevationAngle = elevationToTarget(myLocation, targetLocation);
-		return (<>
-			<Text h5>Ground Distance To Target:{groundDistance}</Text>
-			<Text h5>Heading To Target:{bearing}</Text>
-			<Text h5>Elevation To Target:{elevationAngle}</Text>
-			</>
+		return (
+			<View style={styles.directionsDisplay}>
+				<Text h5>Direct Distance To Target:{distance} m</Text>
+				<Text h5>Heading To Target: {bearing}°</Text>
+				<Text h5>Elevation To Target: {elevationAngle} m</Text>
+			</View>
 		);
 		// return null;
 
@@ -57,11 +58,12 @@ class ScannerScreen extends Component {
 	render() {
 		return (
 			<SafeAreaView>
-				<Text>ScannerScreen</Text>
-				{this.getDirectionsToTarget()}
-				<SensorFusionProvider>
-					<Indicator />
-				</SensorFusionProvider>
+				<View styles={styles.container}>
+					{this.getDirectionsToTarget()}
+					<SensorFusionProvider>
+						<Indicator />
+					</SensorFusionProvider>
+				</View>
 
 			</SafeAreaView>
 		);
@@ -78,10 +80,12 @@ const Indicator = () => {
   const displayHeading = ((360+270-Math.round(toDegrees(heading))))%360;
   const displayRoll = (Math.round(toDegrees(roll))-90)%360;  //front-back tilt (ios = android + 180)
   return (
-    <Text>
-      Heading: {displayHeading}°{'\n'}
-      Roll: {displayRoll}°{'\n'}
-    </Text>
+	  <View style={styles.indicator}>
+	    <Text>
+	      Heading: {displayHeading}°{'\n'}
+	      Roll: {displayRoll}°{'\n'}
+	    </Text>
+	</View>
   );
 };
 

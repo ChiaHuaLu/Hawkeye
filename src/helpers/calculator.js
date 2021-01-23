@@ -23,18 +23,23 @@ export const bearingToTarget = (location, target) => {
 	const x = Math.cos(angleToViewerNS) * Math.sin(angleToViewerEW) - Math.sin(angleToViewerNS) * Math.cos(angleToViewerEW) * Math.cos(deltaAngleEW);
 	const bearingTotal = radians_to_degrees(Math.atan2(y,x));
 	const bearing = ( (bearingTotal + 360) % 360 );
-	return bearing;
+	return bearing.toFixed(4);
+}
+
+export const heightDifferenceBetweenCoordinates = (location, target) => {
+	return target.altitude - location.altitude;
 }
 
 export const elevationToTarget = (location, target) => {
-	const deltaHeight = target.altitude - location.altitude;
-	if (deltaHeight === 0)
-		return 0;
-	const distanceBetween = groundDistanceMeters(location, target);
-	return radians_to_degrees(Math.atan(deltaHeight/distanceBetween))
+	const deltaHeight = heightDifferenceBetweenCoordinates(location, target);
+	const distanceBetween = groundDistanceBetweenCoordinates(location, target);
+	if (distanceBetween == 0) {
+		return deltaHeight > 0 ? 90 : -90;
+	}
+	return radians_to_degrees(Math.atan(deltaHeight/distanceBetween)).toFixed(4);
 }
 
-export const groundDistanceMeters = (location, target) => {
+export const groundDistanceBetweenCoordinates = (location, target) => {
 	const { latitude, longitude } = location;
 	const { latitude: targetLatitude, longitude: targetLongitude} = target;
 
@@ -51,6 +56,17 @@ export const groundDistanceMeters = (location, target) => {
 
 	const distance = R * c; // in metres
 	return distance;
+}
+
+export const directDistance = (location, target) => {
+	const { latitude, longitude } = location;
+	const { latitude: targetLatitude, longitude: targetLongitude} = target;
+
+	const groundDistance = groundDistanceBetweenCoordinates(location, target);
+	const heightDifference = heightDifferenceBetweenCoordinates(location, target);
+
+	const hypotenuse = Math.sqrt(groundDistance ** 2 + heightDifference ** 2);
+	return hypotenuse.toFixed(4);
 }
 
 export const meterToYard = (meters) => {
