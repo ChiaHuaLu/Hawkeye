@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { Text, Input, Button } from 'react-native-elements';
 import { addTarget, deleteTarget } from '../../../actions/TargetActions';
 import { fetchLocation } from '../../../actions/LocationActions';
+import MapView, { Marker } from 'react-native-maps';
 import styles from './styles';
 
 class TargetManagementScreen extends Component {
@@ -61,14 +62,46 @@ class TargetManagementScreen extends Component {
 		return <Text h2>{title}</Text>
 	}
 
+	delta(last, current) {
+		return Math.abs(last - current)
+	}
+
 	renderLastKnownPosition() {
 		if (!this.state.testConnection)
 			return null;
 
+		const { location } = this.props;
 		const { accessCode } = this.props.edit ? this.props.edit : this.state;
-		const lastLocation = this.props.location.targetLocations[accessCode];
+		const lastLocation = location.targetLocations[accessCode];
+		var currentLocation = location.currentLocation;
+		if (!currentLocation.latitude)
+			currentLocation = lastLocation;
+
+		console.log("Current", currentLocation)
+
 		if (lastLocation ) {
-			return <Text>{lastLocation.latitude}, {lastLocation.longitude}</Text>
+			return (
+				<View style={styles.testView}>
+				<Text>{lastLocation.latitude}, {lastLocation.longitude}</Text>
+				<MapView
+					style={styles.map}
+					showsUserLocation
+					initialRegion={{
+						latitude: ( lastLocation.latitude + currentLocation.latitude ) / 2,
+						longitude: ( lastLocation.longitude + currentLocation.longitude ) / 2,
+						latitudeDelta: 1.5* (this.delta(lastLocation.latitude, currentLocation.latitude)) + 0.005,
+						longitudeDelta: 1.5* (this.delta(lastLocation.longitude, currentLocation.longitude)) + 0.005
+					}} >
+						<Marker
+						  coordinate={{
+							  latitude: lastLocation.latitude,
+							  longitude : lastLocation.longitude
+						  }}
+						  pinColor={'red'}
+						/>
+				</MapView>
+				</View>
+			);
 		}
 		return <Text>Unavailable</Text>
 	}
@@ -93,7 +126,7 @@ class TargetManagementScreen extends Component {
 						disabled={!this.state.accessCode || !this.state.name}
 						onPress={()=>{this.testConnection()}}/>
 
-					<Text>{this.renderLastKnownPosition()}</Text>
+					{this.renderLastKnownPosition()}
 				</View>
 			</SafeAreaView>
 		);
