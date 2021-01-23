@@ -18,10 +18,10 @@ const RouterComponent = () => {
 					key="authentication"
 					component={AuthenticationScreen} />
 				<Tabs key="mainFlow"
+					initial
 					tabBarStyle={styles.tabBar}
 					headerLayoutPreset={'center'}>
 					<Scene
-						initial
 						key="targetFlow"
 						title="Targets">
 						<Scene
@@ -34,6 +34,7 @@ const RouterComponent = () => {
 							component={TargetManagementScreen}/>
 					</Scene>
 					<Scene
+						initial
 						key="scanner"
 						component={ScannerScreen} />
 					<Scene

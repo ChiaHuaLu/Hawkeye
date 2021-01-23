@@ -38,7 +38,7 @@ export const uploadCurrentLocation = ({ altitude, latitude, longitude, time}, ac
 };
 
 export const updateCurrentLocation = ({altitude, latitude, longitude, time}, accessCode) => {
-	console.log("Upload Location to State")
+	console.log("Update Location State")
 	const location = { altitude, latitude, longitude, time };
 	return {
 		type: 'location_updated',
