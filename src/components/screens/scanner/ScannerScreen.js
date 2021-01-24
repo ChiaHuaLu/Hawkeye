@@ -34,8 +34,6 @@ class ScannerScreen extends Component {
 		this.setState({...this.state, interval});
 	}
 
-
-
 	render() {
 		return (
 			<SafeAreaView style={styles.safeAreaView}>
@@ -51,14 +49,7 @@ class ScannerScreen extends Component {
 							 	targets={this.props.targets}
 								location={this.props.location} />
 						</SensorFusionProvider>
-						<View style={styles.reticleContainer}>
-							<View style={styles.reticle} />
-						</View>
-
-					
-
 				</RNCamera>
-
 			</SafeAreaView>
 		);
 	}

@@ -3,58 +3,71 @@ import { useSensorFusion, toDegrees } from 'react-native-sensor-fusion';
 import { Text } from 'react-native-elements';
 import { View, SafeAreaView } from 'react-native';
 import styles from './styles';
-import { bearingToTarget, directDistance, elevationToTarget } from '../../../helpers/calculator';
+import {
+	bearingToTarget,
+	directDistance,
+	elevationToTarget,
+	getHeadingCorrection,
+	getPitchCorrection,
+	getCorrectionArrowAngle
+} from '../../../helpers/calculator';
 
 const NaivgationDisplay = ({location, targets}) => {
 
-	const getDirectionsToTarget = () => {
-		const { activeTarget } = targets;
-		if (activeTarget === '') {
-			return (
-				<View style={styles.directionsDisplay}>
-					<Text h3>No Active Target</Text>
-				</View>
-			);
-		}
-		const targetLocation = location.targetLocations[activeTarget];
-		if (targetLocation === null ) {
-			return (
-				<View style={styles.directionsDisplay}>
-					<Text h3>Target Unavailable</Text>
-				</View>
-			);
-		}
-		const myLocation = location.currentLocation;
-
-		const distance = directDistance(myLocation, targetLocation);
-		const bearing = bearingToTarget(myLocation, targetLocation);
-		const elevationAngle = elevationToTarget(myLocation, targetLocation);
+	const { activeTarget } = targets;
+	if (activeTarget === '') {
 		return (
+			<View style={styles.container}>
 			<View style={styles.directionsDisplay}>
-				<Text h5>Direct Distance To Target:{distance} m</Text>
-				<Text h5>Heading To Target: {bearing}°</Text>
-				<Text h5>Elevation To Target: {elevationAngle}°</Text>
-			</View>
+				<Text h3>No Active Target</Text>
+			</View></View>
 		);
 	}
 
-	const { ahrs } = useSensorFusion();
-	const { heading, pitch, roll } = ahrs.getEulerAngles();
-	const headingDegrees = ((360+270-toDegrees(heading))%360).toFixed(2);
-	const rollDegrees = ((toDegrees(roll)-90)%360).toFixed(2);
+	const targetLocation = location.targetLocations[activeTarget];
+	if (targetLocation === null ) {
+		return (
+			<View style={styles.container}>
+			<View style={styles.directionsDisplay}>
+				<Text h3>Target Unavailable</Text>
+			</View></View>
+		);
+	}
+	
+	const myLocation = location.currentLocation;
 
-	const displayHeading = headingDegrees;
-	const displayRoll = rollDegrees;  //front-back tilt (ios = android + 180)
+	const distanceToTarget = directDistance(myLocation, targetLocation);
+	const headingToTarget = bearingToTarget(myLocation, targetLocation);
+	const pitchToTarget = elevationToTarget(myLocation, targetLocation);
+
+	const { ahrs } = useSensorFusion();
+	const { heading, roll } = ahrs.getEulerAngles();
+	const currentHeading = ((360+270-toDegrees(heading))%360).toFixed(2);
+	const currentPitch = ((toDegrees(roll)-90)%360).toFixed(2);//front-back tilt (ios = android + 180)
+
+	const headingCorrection = getHeadingCorrection(headingToTarget, currentHeading)
+	const pitchCorrection = getPitchCorrection(pitchToTarget, currentPitch)
+	const arrowDegree = getCorrectionArrowAngle(headingCorrection, pitchCorrection);
 	return (
-		<View style={styles.container}>
-			{getDirectionsToTarget()}
-				<View style={styles.indicator}>
-			<Text>
-			Heading: {displayHeading}°{'\n'}
-			Roll: {displayRoll}°{'\n'}
-			</Text>
+		<>
+			<View style={styles.reticleContainer}>
+				<View style={styles.reticle}></View>
 			</View>
-		</View>
+			<View style={styles.reticleContainer}>
+				<View style={[styles.reticleArrowContainer, {transform: [{rotate: `${arrowDegree}deg`}]}]}>
+					<View style={styles.reticleArrow}></View>
+				</View>
+			</View>
+
+			<View style={styles.container}>
+				<View style={styles.directionsDisplay}>
+					<Text h5>Direct Distance To Target:{distanceToTarget} m</Text>
+					<Text h5>Relative Target Direction: {headingCorrection}°</Text>
+					<Text h5>Relative Target Pitch: {pitchCorrection}°</Text>
+				</View>
+
+			</View>
+		</>
 	);
 };
 

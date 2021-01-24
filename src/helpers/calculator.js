@@ -1,10 +1,10 @@
 
 
-export const degrees_to_radians = (degrees) => {
+export const degreesToRadians = (degrees) => {
 	return degrees * (Math.PI/180);
 }
 
-export const radians_to_degrees = (radians) => {
+export const radiansToDegrees = (radians) => {
 	return radians * (180/Math.PI);
 }
 
@@ -12,16 +12,16 @@ export const bearingToTarget = (location, target) => {
 	const { latitude, longitude } = location;
 	const { latitude: targetLatitude, longitude: targetLongitude} = target;
 
-	const angleToViewerNS = degrees_to_radians(latitude);
-	const angleToViewerEW = degrees_to_radians(targetLatitude);
-	const deltaAngleNS = degrees_to_radians(targetLatitude-latitude);
-	const deltaAngleEW = degrees_to_radians(targetLongitude-longitude);
+	const angleToViewerNS = degreesToRadians(latitude);
+	const angleToViewerEW = degreesToRadians(targetLatitude);
+	const deltaAngleNS = degreesToRadians(targetLatitude-latitude);
+	const deltaAngleEW = degreesToRadians(targetLongitude-longitude);
 
 	//==================Heading Formula Calculation================//
 
 	const y = Math.sin(deltaAngleEW) * Math.cos(angleToViewerEW);
 	const x = Math.cos(angleToViewerNS) * Math.sin(angleToViewerEW) - Math.sin(angleToViewerNS) * Math.cos(angleToViewerEW) * Math.cos(deltaAngleEW);
-	const bearingTotal = radians_to_degrees(Math.atan2(y,x));
+	const bearingTotal = radiansToDegrees(Math.atan2(y,x));
 	const bearing = ( (bearingTotal + 360) % 360 );
 	return bearing.toFixed(4);
 }
@@ -36,7 +36,7 @@ export const elevationToTarget = (location, target) => {
 	if (distanceBetween == 0) {
 		return deltaHeight > 0 ? 90 : -90;
 	}
-	return radians_to_degrees(Math.atan(deltaHeight/distanceBetween)).toFixed(4);
+	return radiansToDegrees(Math.atan(deltaHeight/distanceBetween)).toFixed(4);
 }
 
 export const groundDistanceBetweenCoordinates = (location, target) => {
@@ -72,4 +72,25 @@ export const directDistance = (location, target) => {
 export const meterToYard = (meters) => {
 	const yardsPerMeter = 1.09361;
 	return meters * yardsPerMeter;
+}
+
+export const getHeadingCorrection = (targetHeading, currentHeading) => {
+	var correction = targetHeading - currentHeading;
+	correction = correction > 180 ? correction -= 360 : correction;
+
+	return correction.toFixed(4);
+}
+
+export const getPitchCorrection = (targetPitch, currentPitch) => {
+	var correction = targetPitch - currentPitch;
+	return correction.toFixed(4);
+}
+
+export const getCorrectionArrowAngle = (headingCorrection, pitchCorrection) => {
+	var unitHeading = headingCorrection / 180;
+	var unitPitch = pitchCorrection / 90;
+	var angle = radiansToDegrees(Math.atan(unitHeading/unitPitch));
+	unitPitch < 0 ? angle += 180 : null
+
+  	return Math.round(angle);
 }
