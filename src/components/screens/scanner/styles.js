@@ -1,4 +1,4 @@
-const reticleSize = 30;
+const reticleSize = 40;
 
 export default styles = {
 	directionsDisplay: {
@@ -21,8 +21,7 @@ export default styles = {
 	reticle: {
 		height: reticleSize,
 		width: reticleSize,
-		borderWidth: 2,
-		borderColor: 'red',
+		borderWidth: 4,
 		borderRadius: reticleSize/2,
 	},
 	reticleArrow: {
@@ -35,13 +34,13 @@ export default styles = {
 	    borderBottomWidth: 20,
 	    borderLeftColor: "transparent",
 	    borderRightColor: "transparent",
-	    borderBottomColor: "red",
+
 	},
 	reticleArrowContainer: {
 		...styles.reticleContainer,
 		alignItems: 'flex-start',
 		justifyContent: 'flex-start',
-		height: 80,
+		height: reticleSize *2,
 		width: 20,
 	},
 	reticleContainer: {

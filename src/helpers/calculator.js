@@ -95,3 +95,9 @@ export const getCorrectionArrowAngle = (headingCorrection, pitchCorrection) => {
 
   	return Math.round(angle);
 };
+
+export const getCorrectionMagnitude = (	headingCorrection, pitchCorrection) => {
+	const magnitude = Math.sqrt(headingCorrection ** 2 + pitchCorrection ** 2);
+	
+	return magnitude;
+};
