@@ -5,8 +5,11 @@ import { Text, Input, Button } from 'react-native-elements';
 import Clipboard from '@react-native-community/clipboard';
 import Communications from 'react-native-communications';
 import GetLocation from 'react-native-get-location';
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import { uploadCurrentLocation, deleteLocation } from '../../../actions/LocationActions';
 import { getLocationInterval } from '../../../helpers/locationHelper';
+import { SettingsTabIcon } from '../../icons';
 import styles from './styles';
 
 
@@ -72,7 +75,7 @@ class SettingsScreen extends Component {
 			return true;
 		return false;
 	}
-	
+
 	render() {
 		return (
 			<SafeAreaView style={styles.safeAreaView}>
@@ -122,6 +125,9 @@ class SettingsScreen extends Component {
 
 SettingsScreen.navigationOptions = {
 	title: 'Settings  ',
+	tabBarIcon: () => (
+		<SettingsTabIcon />
+    )
 }
 
 const mapStateToProps = state => {

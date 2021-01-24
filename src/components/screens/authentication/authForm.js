@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Card, Text, Divider, Input, Button } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
 import { authFormStyles } from './styles';
 
 class AuthForm extends Component {
@@ -30,14 +32,14 @@ class AuthForm extends Component {
 						<Input
 							label="Email"
 							placeholder="person@example.com"
-							leftIcon={null}
+							leftIcon={<Icon name="email" size={authFormStyles.iconSize} />}
 							value={this.state.email}
 							onChangeText={this.updateState.bind(this,'email')}
 							errorMessage={this.props.emailError}/>
 						<Input
 							label="Password"
 							placeholder="password"
-							leftIcon={null}
+							leftIcon={<Icon name="lock" size={authFormStyles.iconSize} />}
 							secureTextEntry
 							value={this.state.password}
 							onChangeText={this.updateState.bind(this,'password')}

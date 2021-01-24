@@ -24,5 +24,6 @@ export const authFormStyles = {
 	},
 	formSection: {
 		padding: 20,
-	}
+	},
+	iconSize: 20,
 };

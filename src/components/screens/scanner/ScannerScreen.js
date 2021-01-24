@@ -8,6 +8,7 @@ import { RNCamera } from 'react-native-camera';
 import { fetchLocation, updateCurrentLocation } from '../../../actions/LocationActions';
 import { getLocationInterval } from '../../../helpers/locationHelper';
 import NavigationDisplay from './navigationDisplay'
+import { ScannerTabIcon } from '../../icons';
 import styles from './styles';
 
 
@@ -55,10 +56,11 @@ class ScannerScreen extends Component {
 	}
 }
 
-
-
 ScannerScreen.navigationOptions = {
-	title: 'Scan'
+	title: 'Scan',
+	tabBarIcon: () => (
+		<ScannerTabIcon />
+    )
 }
 
 const mapStateToProps = state => {
