@@ -47,7 +47,7 @@ class TargetManagementScreen extends Component {
 
 	updateState(key, value) {
 		this.enableOrDisableSaveButton(key, value);
-		this.setState({...this.state, [key]: value});
+		this.setState({...this.state, [key]: value, testConnection: false});
 	}
 
 	componentDidMount() {
@@ -126,7 +126,7 @@ class TargetManagementScreen extends Component {
 						title="Test Connection"
 						containerStyle={styles.testButton}
 						loading={this.props.location.loading}
-						disabled={!this.state.accessCode || !this.state.name}
+						disabled={!this.state.accessCode || !this.state.name || this.state.testConnection}
 						onPress={()=>{this.testConnection()}}/>
 
 					{this.renderLastKnownPosition()}
