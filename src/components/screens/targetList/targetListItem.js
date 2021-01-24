@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { Card, Text, Divider } from 'react-native-elements';
+import { Text, Divider } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import Swipeout from 'react-native-swipeout';
-import styles from './styles';
-import { deleteTarget, toggleTrackTarget } from '../../../actions/TargetActions';
+
+import {
+	deleteTarget,
+	toggleTrackTarget,
+} from '../../../actions/TargetActions';
 import { fetchLocation } from '../../../actions/LocationActions';
 import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
+import styles from './styles';
 
 class TargetListItem extends Component {
 	constructor(props) {
@@ -42,7 +46,7 @@ class TargetListItem extends Component {
 			const differenceInSeconds = Math.round((Date.now() - location.time) / 1000);
 			return `Updated ${getTimeDifferenceText(differenceInSeconds)}`;
 		}
-		return "Unavailable"
+		return "Unavailable";
 	}
 
 	render() {

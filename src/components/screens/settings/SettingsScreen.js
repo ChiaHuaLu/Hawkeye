@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, SafeAreaView, Vibration } from 'react-native';
-import { Text, Input, Button } from 'react-native-elements';
+import { Text, Button } from 'react-native-elements';
 import Clipboard from '@react-native-community/clipboard';
 import Communications from 'react-native-communications';
-import GetLocation from 'react-native-get-location';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { uploadCurrentLocation, deleteLocation } from '../../../actions/LocationActions';
+import {
+	uploadCurrentLocation,
+	deleteLocation,
+ } from '../../../actions/LocationActions';
 import { getLocationInterval } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
 import styles from './styles';
-
 
 const locationUpdateIntervalSeconds = 10;
 
@@ -37,10 +38,10 @@ class SettingsScreen extends Component {
 	startRecordingLocation() {
 		const uploadUpdatedLocation = ((location) => {
 			const { altitude, latitude, longitude, time } = location;
-			const { accessCode } = this.props.location
+			const { accessCode } = this.props.location;
 
-			this.props.uploadCurrentLocation(location, accessCode)
-			this.setState({...this.state, loading: false})
+			this.props.uploadCurrentLocation(location, accessCode);
+			this.setState({...this.state, loading: false});
 		});
 		const interval = getLocationInterval(uploadUpdatedLocation, locationUpdateIntervalSeconds, locationUpdateIntervalSeconds);
 		this.setState({...this.state, interval: interval, broadcasting: true, loading: true});
@@ -95,14 +96,14 @@ class SettingsScreen extends Component {
 							onPress={this.copyToClipboard.bind(this)}
 							disabled={!this.props.location.accessCode} />
 					</View>
+
 					<View style={styles.middleContainer}>
 						{ this.state.broadcasting
 							? <Text h1>Broadcasting...</Text>
 							: null
 						}
-
-
 					</View>
+
 					<View style={styles.locationButtonsContainer}>
 						<Button
 							containerStyle={styles.locationButtons}
@@ -127,12 +128,12 @@ SettingsScreen.navigationOptions = {
 	title: 'Settings  ',
 	tabBarIcon: () => (
 		<SettingsTabIcon />
-    )
-}
+    ),
+};
 
 const mapStateToProps = state => {
-	return state
-}
+	return state;
+};
 
 export default connect(
 	mapStateToProps,

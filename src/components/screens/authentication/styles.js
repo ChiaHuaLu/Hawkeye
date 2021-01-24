@@ -1,20 +1,20 @@
 export const styles = {
 	authForm: {
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 	authScreenContainer: {
 		flex: 1,
-		justifyContent: 'center'
-	}
+		justifyContent: 'center',
+	},
 };
 
 export const authFormStyles = {
 	container: {
 		justifyContent: 'space-around',
-		flex: 1
+		flex: 1,
 	},
 	center: {
-		alignSelf: 'center'
+		alignSelf: 'center',
 	},
 	alternateAuthText: {
 		color: 'blue',

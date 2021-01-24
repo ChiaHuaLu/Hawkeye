@@ -32,7 +32,7 @@ class TargetManagementScreen extends Component {
 			name: '',
 			accessCode: '',
 			testMessage: '',
-			testConnection: false
+			testConnection: false,
 		}
 	}
 
@@ -41,7 +41,7 @@ class TargetManagementScreen extends Component {
 		const shouldShow = nextState.name && nextState.accessCode || show;
 		this.props.navigation.setParams({
 			'onRight': shouldShow ? this.save.bind(this) : undefined,
-			'rightTitle': shouldShow ? 'Save' : undefined
+			'rightTitle': shouldShow ? 'Save' : undefined,
 		});
 	}
 
@@ -54,7 +54,7 @@ class TargetManagementScreen extends Component {
 		const target = this.props.edit;
 		if (target) {
 			this.enableOrDisableSaveButton(null, null, true);
-			this.setState({name: target.name, accessCode: target.accessCode})
+			this.setState({name: target.name, accessCode: target.accessCode});
 		}
 	}
 
@@ -62,11 +62,11 @@ class TargetManagementScreen extends Component {
 		const modifyMode = this.props.edit;
 		const title = modifyMode ? "Edit Details" : "Add Target";
 
-		return <Text h2>{title}</Text>
+		return <Text h2>{title}</Text>;
 	}
 
 	delta(last, current) {
-		return Math.abs(last - current)
+		return Math.abs(last - current);
 	}
 
 	renderLastKnownPosition() {
@@ -106,7 +106,7 @@ class TargetManagementScreen extends Component {
 				</View>
 			);
 		}
-		return <Text>Unavailable</Text>
+		return <Text>Unavailable</Text>;
 	}
 
 	render() {
@@ -138,7 +138,7 @@ class TargetManagementScreen extends Component {
 
 const mapStateToProps = state => {
 	return state;
-}
+};
 
 export default connect(
 	mapStateToProps,

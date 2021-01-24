@@ -18,4 +18,4 @@ export const getLocationInterval = (action, timeout, interval) => {
 	return setInterval(() => {
 		getLocation(action, timeout);
 	}, interval * 1000);
-}
+};

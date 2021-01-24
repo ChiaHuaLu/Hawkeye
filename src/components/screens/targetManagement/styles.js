@@ -5,17 +5,17 @@ export default styles = {
 		height: '100%',
 	},
 	testButton: {
-		width: '50%'
+		width: '50%',
 	},
 	map: {
 		height: '70%',
-		width: '100%'
+		width: '100%',
 	},
 	testView: {
 		flexDirection: 'column',
 		flex: 1,
 		width: '100%',
 		alignItems: 'center',
-		padding: 20
-	}
+		padding: 20,
+	},
 };

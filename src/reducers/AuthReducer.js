@@ -1,29 +1,31 @@
+import { actionTypes } from '../actions/types';
+
 const INITIAL_STATE = {
 	error: {},
-	loading: false
+	loading: false,
 };
 
 export default (state=INITIAL_STATE, action) => {
 	switch (action.type) {
-		case 'authenticate_success':
-			return {
-				loading: false
-			};
-		case 'authenticate_failure':
+		case actionTypes.auth.authenticationSuccess:
 			return {
 				loading: false,
-				error: action.payload
 			};
-		case 'loading':
+		case actionTypes.auth.authenticationFailure:
+			return {
+				loading: false,
+				error: action.payload,
+			};
+		case actionTypes.auth.loading:
 			return {
 				loading: true,
-				error: {}
-			}
-		case 'clear_error':
+				error: {},
+			};
+		case actionTypes.auth.clearError:
 			return {
-				error: {}
-			}
+				error: {},
+			};
 		default:
 			return state;
-	}
-}
+	};
+};

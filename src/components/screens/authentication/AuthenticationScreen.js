@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Vibration } from 'react-native';
+import { SafeAreaView, Vibration } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import firebase from 'firebase';
 
-import { signIn, register, clearError, dispatchLoadingAction } from '../../../actions/AuthActions'
+import {
+	signIn,
+	register,
+	clearError,
+	dispatchLoadingAction,
+} from '../../../actions/AuthActions';
 import AuthForm from './authForm';
 import { styles } from './styles';
 
@@ -14,12 +19,12 @@ class AuthenticationScreen extends Component {
 		super(props);
 		this.state={
 			isRegisterMode:false,
-			loading: false
-		}
+			loading: false,
+		};
 		this.props.clearError();
 		firebase.auth().onAuthStateChanged((user) => {
 	      if (user) {
-			  Actions.mainFlow();
+			  Actions.mainFlow(); //Triggering Twice on Log In
 		  }
 	    });
 	}
@@ -53,15 +58,16 @@ class AuthenticationScreen extends Component {
 			onSubmitAction:this.registerUser.bind(this),
 			onSubmitText:'Register'
 		};
+
 		var props = this.state.isRegisterMode ? registerUI : signInUI;
 		const { error } = this.props.auth;
 
 		if (error && Object.keys(error).length !== 0) {
 			Vibration.vibrate(500);
 			if (error.code === 'auth/invalid-email') {
-				props.emailError = error.message
+				props.emailError = error.message;
 			} else {
-				props.passwordError = error.message
+				props.passwordError = error.message;
 			}
 		}
 		return props;
@@ -81,8 +87,7 @@ class AuthenticationScreen extends Component {
 					alternateAuthText={authFormProps.alternateAuthText}
 					onSubmitAction={authFormProps.onSubmitAction}
 					onSubmitText={authFormProps.onSubmitText}
-					toggleAuthMode={this.toggleAuthenticationMethod.bind(this)}
-					 />
+					toggleAuthMode={this.toggleAuthenticationMethod.bind(this)} />
 			</SafeAreaView>
 		);
 	}
@@ -90,7 +95,7 @@ class AuthenticationScreen extends Component {
 
 const mapStateToProps = state => {
 	return state;
-}
+};
 
 export default connect(
 	mapStateToProps,

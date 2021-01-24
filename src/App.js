@@ -6,8 +6,9 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import firebase from 'firebase';
+
 import Router from './Router';
-import rootReducer from './reducers'
+import rootReducer from './reducers';
 
 class App extends Component {
 
@@ -20,7 +21,7 @@ class App extends Component {
 			storageBucket: "projecthawkeye-bc56f.appspot.com",
 			messagingSenderId: "911124594014",
 			appId: "1:911124594014:web:86d80ff56be809a8a963cf",
-			measurementId: "G-PTY44XHSXW"
+			measurementId: "G-PTY44XHSXW",
 		};
 
 		if (!firebase.apps.length) {
@@ -28,12 +29,14 @@ class App extends Component {
 		} else {
 		   firebase.app();
 		}
-
 	}
 
 	render() {
 		const persistedReducer =
-			persistReducer({key: 'root', storage: AsyncStorage }, rootReducer)
+			persistReducer(
+				{ key: 'root', storage: AsyncStorage },
+				rootReducer
+			);
 
 		const store = createStore(persistedReducer, {}, applyMiddleware(ReduxThunk));
 		return (

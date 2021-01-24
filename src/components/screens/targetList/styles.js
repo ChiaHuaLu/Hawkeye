@@ -5,25 +5,24 @@ export default styles = {
 		justifyContent: 'space-between',
 	},
 	activeTarget: {
-		backgroundColor: '#34abeb'
+		backgroundColor: '#34abeb',
 	},
 	itemDescription: {
 		fontWeight: 'bold',
 	},
 	itemStatus: {
-
 	},
 	itemDetails: {
-		fontSize: 15
+		fontSize: 15,
 	},
 	container: {
-		flex: 1
+		flex: 1,
 	},
 	noTargetsView: {
-		alignItems: 'center'
+		alignItems: 'center',
 	},
 	noTargetsText: {
 		fontSize: 20,
-		color: '#aaaaaa'
-	}
+		color: '#aaaaaa',
+	},
 };

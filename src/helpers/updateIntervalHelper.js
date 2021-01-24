@@ -17,4 +17,4 @@ export const getTimeDifferenceText = (differenceInSeconds) => {
 		return `${differenceInHours} hours ago`
 
 	return `${Math.round(differenceInHours / 24)} days ago`;
-}
+};

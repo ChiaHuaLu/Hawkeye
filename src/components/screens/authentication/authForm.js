@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Text, Divider, Input, Button } from 'react-native-elements';
+import { Text, Input, Button } from 'react-native-elements';
 import { View, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -13,8 +13,8 @@ class AuthForm extends Component {
 			email: '',
 			password: '',
 			loading: false,
-			message: ''
-		}
+			message: '',
+		};
 	}
 
 	updateState(key, value) {
@@ -27,6 +27,7 @@ class AuthForm extends Component {
 				<View style={[authFormStyles.formSection, authFormStyles.center]}>
 					<Text h1>Hawkeye</Text>
 				</View>
+
 				<View style={authFormStyles.formSection}>
 					<View>
 						<Input
@@ -50,7 +51,6 @@ class AuthForm extends Component {
 						style={authFormStyles.button}
 						title={this.props.onSubmitText}
 						onPress={()=>{this.props.onSubmitAction(this.state)}} />
-
 				</View>
 
 				<View style={authFormStyles.formSection}>

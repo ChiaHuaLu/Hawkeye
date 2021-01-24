@@ -1,15 +1,17 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 
+import { actionTypes } from './types';
+
 export const clearError = () => {
 	return {
-		type: 'clear_error',
-	}
+		type: actionTypes.auth.clearError,
+	};
 };
 
 export const dispatchLoadingAction = () => {
 	return {
-		type: 'loading'
+		type: actionTypes.auth.loading,
 	};
 };
 
@@ -18,16 +20,10 @@ export const signIn = (email, password) => {
 		dispatchLoadingAction(dispatch);
 		firebase.auth().signInWithEmailAndPassword(email, password)
 			.then((user) => {
-				dispatch({
-					type: 'authenticate_success'
-				});
-				Actions.mainFlow();
+				authenticationSuccess(dispatch);
 			})
 			.catch((err) => {
-				dispatch({
-					type: 'authenticate_failure',
-					payload: {code: err.code, message: err.message}
-				})
+				authenticationFailure(dispatch, err);
 			});
 	};
 };
@@ -37,16 +33,24 @@ export const register = (email, password) => {
 		dispatchLoadingAction(dispatch);
 		firebase.auth().createUserWithEmailAndPassword(email, password)
 			.then((user) => {
-				dispatch({
-					type: 'authenticate_success'
-				});
-				Actions.mainFlow();
+				authenticationSuccess(dispatch);
 			})
 			.catch((err) => {
-				dispatch({
-					type: 'authenticate_failure',
-					payload: {code: err.code, message: err.message}
-				})
+				authenticationFailure(dispatch, err);
 			});
 	};
+};
+
+const authenticationSuccess = (dispatch) => {
+	dispatch({
+		type: actionTypes.auth.authenticationSuccess,
+	});
+	Actions.mainFlow();
+};
+
+const authenticationFailure = (dispatch, err) => {
+	dispatch({
+		type: actionTypes.auth.authenticationFailure,
+		payload: {code: err.code, message: err.message}
+	});
 };

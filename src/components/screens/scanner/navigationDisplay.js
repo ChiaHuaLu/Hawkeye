@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSensorFusion, toDegrees } from 'react-native-sensor-fusion';
 import { Text } from 'react-native-elements';
-import { View, SafeAreaView } from 'react-native';
+import { View } from 'react-native';
 import styles from './styles';
 import {
 	bearingToTarget,
@@ -9,7 +9,7 @@ import {
 	elevationToTarget,
 	getHeadingCorrection,
 	getPitchCorrection,
-	getCorrectionArrowAngle
+	getCorrectionArrowAngle,
 } from '../../../helpers/calculator';
 
 const NaivgationDisplay = ({location, targets}) => {
@@ -33,7 +33,7 @@ const NaivgationDisplay = ({location, targets}) => {
 			</View></View>
 		);
 	}
-	
+
 	const myLocation = location.currentLocation;
 
 	const distanceToTarget = directDistance(myLocation, targetLocation);
@@ -43,10 +43,10 @@ const NaivgationDisplay = ({location, targets}) => {
 	const { ahrs } = useSensorFusion();
 	const { heading, roll } = ahrs.getEulerAngles();
 	const currentHeading = ((360+270-toDegrees(heading))%360).toFixed(2);
-	const currentPitch = ((toDegrees(roll)-90)%360).toFixed(2);//front-back tilt (ios = android + 180)
+	const currentPitch = ((toDegrees(roll)-90)%360).toFixed(2); //front-back tilt (ios = android + 180)
 
-	const headingCorrection = getHeadingCorrection(headingToTarget, currentHeading)
-	const pitchCorrection = getPitchCorrection(pitchToTarget, currentPitch)
+	const headingCorrection = getHeadingCorrection(headingToTarget, currentHeading);
+	const pitchCorrection = getPitchCorrection(pitchToTarget, currentPitch);
 	const arrowDegree = getCorrectionArrowAngle(headingCorrection, pitchCorrection);
 	return (
 		<>

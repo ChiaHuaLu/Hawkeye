@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Scene, Router, Tabs, Actions } from 'react-native-router-flux';
-import { Navigator, Text } from 'react-native';
+
 import AuthenticationScreen from './components/screens/authentication/AuthenticationScreen';
 import TargetListScreen from './components/screens/targetList/TargetListScreen';
 import TargetManagementScreen from './components/screens/targetManagement/TargetManagementScreen';
@@ -42,13 +42,13 @@ const RouterComponent = () => {
 			</Scene>
 		</Router>
 	);
-}
+};
 
 const styles = {
 	navigationBar: {
 	},
 	tabBar: {
 	}
-}
+};
 
 export default RouterComponent;

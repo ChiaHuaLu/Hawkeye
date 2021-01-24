@@ -4,9 +4,9 @@ import { View, SafeAreaView, FlatList } from 'react-native';
 import { Text } from 'react-native-elements';
 import _ from 'lodash';
 
-import styles from './styles';
 import { fetchTargets } from '../../../actions/TargetActions';
 import TargetListItem from './targetListItem';
+import styles from './styles';
 
 class TargetListScreen extends Component {
 
@@ -30,7 +30,6 @@ class TargetListScreen extends Component {
 			<View style={styles.noTargetsView}>
 				<Text style={styles.noTargetsText}>No targets added</Text>
 			</View>
-
 		);
 	}
 
@@ -55,10 +54,10 @@ const mapStateToProps = (state) => {
 		return {
 			name: object.name,
 			accessCode: accessCode
-		}
-	})
+		};
+	});
 	return {...state, targets: targets};
-}
+};
 
 export default connect(
 	mapStateToProps,
