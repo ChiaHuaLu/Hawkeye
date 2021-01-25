@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Input, Button } from 'react-native-elements';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Hawkeye from '../../../assets/hawkeyeLogo/blackLogo.png';
@@ -21,6 +21,11 @@ class AuthForm extends Component {
 
 	updateState(key, value) {
 		this.setState({...this.state, [key]: value});
+	}
+
+	submitButtonPress() {
+		Keyboard.dismiss();
+		this.props.onSubmitAction(this.state)
 	}
 
 	render() {
@@ -56,7 +61,7 @@ class AuthForm extends Component {
 						style={authFormStyles.button}
 						buttonStyle={SharedStyles.buttonStyle}
 						title={this.props.onSubmitText}
-						onPress={()=>{this.props.onSubmitAction(this.state)}} />
+						onPress={this.submitButtonPress.bind(this)} />
 				</View>
 
 				<View style={authFormStyles.formSection}>

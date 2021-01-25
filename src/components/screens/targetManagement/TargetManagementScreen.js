@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { Text, Input, Button } from 'react-native-elements';
@@ -24,6 +24,7 @@ class TargetManagementScreen extends Component {
 
 	testConnection() {
 		const { accessCode } = this.props.edit ? this.props.edit : this.state;
+		Keyboard.dismiss();
 		this.props.fetchLocation(accessCode);
 		this.setState({...this.state, testConnection: true});
 	}
