@@ -57,3 +57,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Secrets
+android/app/src/main/res/values/secrets.xml
+src/constants/secrets.js
