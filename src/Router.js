@@ -26,6 +26,7 @@ const RouterComponent = () => {
 					headerLayoutPreset={'center'}>
 					<Scene
 						key="targetFlow"
+						title="Targets"
 						icon={TargetListTabIcon} >
 						<Scene
 							key="targetList"
