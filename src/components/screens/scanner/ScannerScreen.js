@@ -8,6 +8,8 @@ import {
 	fetchLocation,
 	updateCurrentLocation,
 } from '../../../actions/LocationActions';
+import Constants from '../../../constants/constants';
+import SharedStyles from '../../../constants/sharedStyles';
 import { getLocationInterval } from '../../../helpers/locationHelper';
 import NavigationDisplay from './navigationDisplay'
 import { ScannerTabIcon } from '../../icons';
@@ -33,7 +35,9 @@ class ScannerScreen extends Component {
 			}
 		});
 
-		const interval = getLocationInterval(getLocation, 3, 10);
+		const interval = getLocationInterval(getLocation,
+			Constants.locationUpdateIntervalSeconds,
+			Constants.locationUpdateIntervalSeconds);
 		this.setState({...this.state, interval});
 	}
 
@@ -62,6 +66,7 @@ ScannerScreen.navigationOptions = {
 	tabBarIcon: () => (
 		<ScannerTabIcon />
     ),
+	...SharedStyles.headerStyle,
 };
 
 const mapStateToProps = state => {

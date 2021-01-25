@@ -1,3 +1,5 @@
+import Constants from '../../../constants/constants';
+
 export default styles = {
 	listItem: {
 		padding: 20,
@@ -5,7 +7,7 @@ export default styles = {
 		justifyContent: 'space-between',
 	},
 	activeTarget: {
-		backgroundColor: '#34abeb',
+		backgroundColor: Constants.primaryThemeColor,
 	},
 	itemDescription: {
 		fontWeight: 'bold',

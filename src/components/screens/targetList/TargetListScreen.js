@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, SafeAreaView, FlatList } from 'react-native';
+import { View, SafeAreaView, FlatList, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Text } from 'react-native-elements';
+import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
+import Constants from '../../../constants/constants';
+import SharedStyles from '../../../constants/sharedStyles';
 import { fetchTargets } from '../../../actions/TargetActions';
 import TargetListItem from './targetListItem';
 import styles from './styles';
@@ -47,6 +51,24 @@ class TargetListScreen extends Component {
 	componentDidMount() {
 		this.props.fetchTargets();
 	}
+}
+
+TargetListScreen.navigationOptions = {
+	title: 'Target List',
+	...SharedStyles.headerStyle,
+	headerRight: () => (
+		<TouchableOpacity
+			onPress={()=>{
+				Actions.targetManagement();
+			}}>
+			<View style={styles.signOutButton}>
+				<Icon
+					name="add-outline"
+					size={Constants.navigationIconSize}
+					color={Constants.primaryThemeColor} />
+			</View>
+		</TouchableOpacity>
+	),
 }
 
 const mapStateToProps = (state) => {

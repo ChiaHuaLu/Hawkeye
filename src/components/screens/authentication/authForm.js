@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Text, Input, Button } from 'react-native-elements';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import Hawkeye from '../../../assets/hawkeyeLogo/blackLogo.png';
+import SharedStyles from '../../../constants/sharedStyles';
 import { authFormStyles } from './styles';
 
 class AuthForm extends Component {
@@ -25,7 +27,10 @@ class AuthForm extends Component {
 		return (
 			<View style={authFormStyles.container}>
 				<View style={[authFormStyles.formSection, authFormStyles.center]}>
-					<Text h1>Hawkeye</Text>
+					<Image
+					  style={authFormStyles.logo}
+					  source={Hawkeye} />
+					<Text h1 style={authFormStyles.title}>Hawkeye</Text>
 				</View>
 
 				<View style={authFormStyles.formSection}>
@@ -49,6 +54,7 @@ class AuthForm extends Component {
 					<Button
 						loading={this.props.loading}
 						style={authFormStyles.button}
+						buttonStyle={SharedStyles.buttonStyle}
 						title={this.props.onSubmitText}
 						onPress={()=>{this.props.onSubmitAction(this.state)}} />
 				</View>

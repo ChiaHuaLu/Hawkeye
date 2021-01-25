@@ -1,3 +1,6 @@
+import Constants from '../../constants/constants';
+
 export const styles = {
-	iconSize: 30,
+	iconSize: Constants.navigationIconSize,
+	color: Constants.primaryThemeColor,
 };

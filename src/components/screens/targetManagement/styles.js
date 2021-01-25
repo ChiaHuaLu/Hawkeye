@@ -1,3 +1,5 @@
+import Constants from '../../../constants/constants';
+
 export default styles = {
 	container: {
 		padding: 20,

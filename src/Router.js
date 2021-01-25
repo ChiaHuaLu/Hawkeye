@@ -8,6 +8,7 @@ import TargetManagementScreen from './components/screens/targetManagement/Target
 import ScannerScreen from './components/screens/scanner/ScannerScreen';
 import SettingsScreen from './components/screens/settings/SettingsScreen';
 import { TargetListTabIcon } from './components/icons';
+import Constants from './constants/constants';
 
 const RouterComponent = () => {
 	return (
@@ -25,13 +26,10 @@ const RouterComponent = () => {
 					headerLayoutPreset={'center'}>
 					<Scene
 						key="targetFlow"
-						icon={TargetListTabIcon}
-						title="Targets">
+						icon={TargetListTabIcon} >
 						<Scene
 							key="targetList"
-							component={TargetListScreen}
-							rightTitle={"Add"}
-							onRight={()=>{Actions.targetManagement()}} />
+							component={TargetListScreen} />
 						<Scene
 							key="targetManagement"
 							component={TargetManagementScreen} />
@@ -49,9 +47,8 @@ const RouterComponent = () => {
 };
 
 const styles = {
-	navigationBar: {
-	},
 	tabBar: {
+		backgroundColor: Constants.secondaryThemeColor
 	}
 };
 

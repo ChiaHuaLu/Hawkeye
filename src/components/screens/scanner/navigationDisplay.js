@@ -2,7 +2,7 @@ import React from 'react';
 import { useSensorFusion, toDegrees } from 'react-native-sensor-fusion';
 import { Text } from 'react-native-elements';
 import { View } from 'react-native';
-import styles from './styles';
+
 import {
 	bearingToTarget,
 	directDistance,
@@ -12,6 +12,7 @@ import {
 	getCorrectionArrowAngle,
 	getCorrectionMagnitude,
 } from '../../../helpers/calculator';
+import styles from './styles';
 
 const NaivgationDisplay = ({location, targets}) => {
 
@@ -66,7 +67,6 @@ const NaivgationDisplay = ({location, targets}) => {
 	const reticleColor = {borderColor: reticleElementsColor};
 	const reticleArrowColor = {borderBottomColor: reticleElementsColor};
 
-
 	return (
 		<>
 			<View style={styles.reticleContainer}>
@@ -80,9 +80,9 @@ const NaivgationDisplay = ({location, targets}) => {
 
 			<View style={styles.container}>
 				<View style={styles.directionsDisplay}>
-					<Text h5>Direct Distance To Target:{distanceToTarget} m</Text>
-					<Text h5>Relative Target Direction: {headingCorrection}°</Text>
-					<Text h5>Relative Target Pitch: {pitchCorrection}°</Text>
+					<Text h5 style={styles.directionsText}>Distance:  {distanceToTarget} m</Text>
+					<Text h5 style={styles.directionsText}>Heading:  {headingCorrection}°</Text>
+					<Text h5 style={styles.directionsText}>Pitch:  {pitchCorrection}°</Text>
 				</View>
 
 			</View>

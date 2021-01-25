@@ -5,18 +5,17 @@ import { Text, Button } from 'react-native-elements';
 import Clipboard from '@react-native-community/clipboard';
 import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
 import {
 	uploadCurrentLocation,
 	deleteLocation,
  } from '../../../actions/LocationActions';
+import Constants from '../../../constants/constants';
+import SharedStyles from '../../../constants/sharedStyles';
 import { getLocationInterval } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
 import styles from './styles';
-
-const locationUpdateIntervalSeconds = 10;
 
 class SettingsScreen extends Component {
 
@@ -25,7 +24,7 @@ class SettingsScreen extends Component {
 		this.state = {
 			broadcasting: false,
 			loading: false
-		}
+		};
 	}
 
 	textAccessCode() {
@@ -45,7 +44,9 @@ class SettingsScreen extends Component {
 			this.props.uploadCurrentLocation(location, accessCode);
 			this.setState({...this.state, loading: false});
 		});
-		const interval = getLocationInterval(uploadUpdatedLocation, locationUpdateIntervalSeconds, locationUpdateIntervalSeconds);
+		const interval = getLocationInterval(uploadUpdatedLocation,
+			Constants.locationUpdateIntervalSeconds,
+			Constants.locationUpdateIntervalSeconds);
 		this.setState({...this.state, interval: interval, broadcasting: true, loading: true});
 	}
 
@@ -89,11 +90,13 @@ class SettingsScreen extends Component {
 					<View style={styles.buttonsContainer}>
 						<Button
 							containerStyle={styles.accessCodeButtons}
+							buttonStyle={SharedStyles.buttonStyle}
 							title="Text"
 							onPress={this.textAccessCode.bind(this)}
 							disabled={!this.props.location.accessCode} />
 						<Button
 						 	containerStyle={styles.accessCodeButtons}
+							buttonStyle={SharedStyles.buttonStyle}
 							title="Copy"
 							onPress={this.copyToClipboard.bind(this)}
 							disabled={!this.props.location.accessCode} />
@@ -109,12 +112,14 @@ class SettingsScreen extends Component {
 					<View style={styles.locationButtonsContainer}>
 						<Button
 							containerStyle={styles.locationButtons}
+							buttonStyle={SharedStyles.buttonStyle}
 							title={this.getRecordingButtonText()}
 							onPress={this.toggleLocationSwitch.bind(this)}
 							loading={this.state.loading}
 							/>
 						<Button
 							containerStyle={styles.locationButtons}
+							buttonStyle={styles.deleteButton}
 							title="Delete Location Data"
 							onPress={this.deleteLocationData.bind(this)}
 							disabled={this.shouldDisableDeleteButton()}
@@ -131,6 +136,7 @@ SettingsScreen.navigationOptions = {
 	tabBarIcon: () => (
 		<SettingsTabIcon />
     ),
+	...SharedStyles.headerStyle,
 	headerRight: () => (
 		<TouchableOpacity
 			onPress={()=>{
@@ -139,7 +145,8 @@ SettingsScreen.navigationOptions = {
 			<View style={styles.signOutButton}>
 	            <Icon
 					name="log-out-outline"
-	              	size={30} />
+	              	size={Constants.navigationIconSize}
+					color={Constants.primaryThemeColor} />
 			</View>
 		</TouchableOpacity>
           ),

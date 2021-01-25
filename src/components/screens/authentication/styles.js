@@ -1,3 +1,5 @@
+import Constants from '../../../constants/constants';
+
 export const styles = {
 	authForm: {
 		alignSelf: 'center',
@@ -15,6 +17,8 @@ export const authFormStyles = {
 	},
 	center: {
 		alignSelf: 'center',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 	alternateAuthText: {
 		color: 'blue',
@@ -24,6 +28,18 @@ export const authFormStyles = {
 	},
 	formSection: {
 		padding: 20,
+	},
+	primaryButtonStyle: {
+		backgroundColor: Constants.primaryThemeColor,
+	},
+	title: {
+		color: Constants.primaryThemeColor,
+	},
+	logo: {
+		width: 200,
+		height: 200,
+		position: 'absolute',
+		top: -50
 	},
 	iconSize: 20,
 };

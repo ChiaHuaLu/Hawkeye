@@ -6,7 +6,7 @@ import { styles } from './styles';
 class ScannerTabIcon extends Component {
 	render() {
 		return (
-			<Icon name="scan-outline" size={styles.iconSize} />
+			<Icon name="scan-outline" size={styles.iconSize} color={styles.color} />
 		);
 	}
 }

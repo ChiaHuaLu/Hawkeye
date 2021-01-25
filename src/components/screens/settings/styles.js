@@ -1,3 +1,5 @@
+import Constants from '../../../constants/constants';
+
 export default styles = {
 	buttonsContainer : {
 		flexDirection: 'row',
@@ -17,6 +19,9 @@ export default styles = {
 	locationButtons: {
 		margin: 5,
 	},
+	deleteButton: {
+		backgroundColor: 'red',
+	},
 	container: {
 		alignItems: 'center',
 		padding: 15,
@@ -32,5 +37,8 @@ export default styles = {
 	},
 	signOutButton: {
 		paddingRight: 10,
+	},
+	primaryButtonStyle: {
+		backgroundColor: Constants.primaryThemeColor,
 	},
 };

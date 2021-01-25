@@ -1,3 +1,5 @@
+import Constants from '../../../constants/constants';
+
 const reticleSize = 40;
 
 export default styles = {
@@ -5,8 +7,11 @@ export default styles = {
 		padding: 20,
 		alignItems: 'center',
 	},
+	directionsText: {
+		color: Constants.primaryThemeColor
+	},
 	container: {
-		backgroundColor: 'rgba(255, 255, 255, 0.3)',
+		backgroundColor: Constants.secondaryThemeColorTranslucent,
 	},
 	indicator: {
 		alignItems: 'center',

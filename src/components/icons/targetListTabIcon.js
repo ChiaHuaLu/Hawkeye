@@ -6,7 +6,7 @@ import { styles } from './styles';
 class TargetListTabIcon extends Component {
 	render() {
 		return (
-			<Icon name="list-outline" size={styles.iconSize} />
+			<Icon name="list-outline" size={styles.iconSize} color={styles.color} />
 		);
 	}
 }

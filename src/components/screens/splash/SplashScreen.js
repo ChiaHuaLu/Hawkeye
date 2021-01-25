@@ -4,6 +4,7 @@ import { Text, Button, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
+import SharedStyles from '../../../constants/sharedStyles';
 import Hawkeye from '../../../assets/hawkeyeLogo/splashScreenLogo.png';
 import { styles } from './styles';
 
@@ -45,6 +46,7 @@ class SplashScreen extends Component {
 		return (
 			<View style={styles.proceedButtonContainer}>
 				<Button
+					buttonStyle={SharedStyles.buttonStyle}
 					onPress={() => this.proceedToNextScreen()}
 					title='Proceed' />
 			</View>
@@ -59,7 +61,7 @@ class SplashScreen extends Component {
 			          style={styles.logo}
 			          source={Hawkeye} />
 					<View style={styles.textContainer}>
-						<Text h1>Hawkeye</Text>
+						<Text h1 style={styles.title}>Hawkeye</Text>
 						<NativeText
 							style={styles.subtitle}
 							fontStyle="italic">Pinpoint Your Target

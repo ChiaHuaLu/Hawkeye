@@ -6,7 +6,7 @@ import { styles } from './styles';
 class SettingsTabIcon extends Component {
 	render() {
 		return (
-			<Icon name="cog-outline" size={styles.iconSize} />
+			<Icon name="cog-outline" size={styles.iconSize} color={styles.color} />
 		);
 	}
 }

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { Text, Input, Button } from 'react-native-elements';
 import MapView, { Marker } from 'react-native-maps';
 
+import Constants from '../../../constants/constants';
+import SharedStyles from '../../../constants/sharedStyles';
 import { fetchLocation } from '../../../actions/LocationActions';
 import { addTarget, deleteTarget } from '../../../actions/TargetActions';
 import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
@@ -17,7 +19,7 @@ class TargetManagementScreen extends Component {
 			this.props.deleteTarget(this.props.edit.accessCode);
 		this.props.addTarget(this.state.name, this.state.accessCode);
 		this.props.fetchLocation(this.state.accessCode);
-		Actions.pop();
+		Actions.popTo('targetList');
 	}
 
 	testConnection() {
@@ -117,14 +119,17 @@ class TargetManagementScreen extends Component {
 					<Input
 						onChangeText={this.updateState.bind(this, 'name')}
 						value={this.state.name}
+						placeholder="Dad"
 						label="Target Nickname" />
 					<Input
 						onChangeText={this.updateState.bind(this, 'accessCode')}
 						value={this.state.accessCode}
+						placeholder="-AwBxCyDz"
 						label="Access Code" />
 					<Button
 						title="Test Connection"
 						containerStyle={styles.testButton}
+						buttonStyle={SharedStyles.buttonStyle}
 						loading={this.props.location.loading}
 						disabled={!this.state.accessCode || !this.state.name || this.state.testConnection}
 						onPress={()=>{this.testConnection()}}/>
@@ -135,6 +140,11 @@ class TargetManagementScreen extends Component {
 		);
 	}
 }
+
+TargetManagementScreen.navigationOptions = {
+	title: 'Target List',
+	...SharedStyles.headerStyle
+};
 
 const mapStateToProps = state => {
 	return state;

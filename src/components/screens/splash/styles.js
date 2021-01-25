@@ -1,3 +1,5 @@
+import Constants from '../../../constants/constants';
+
 export const styles = {
 	proceedButtonContainer: {
 		padding: 20,
@@ -10,6 +12,7 @@ export const styles = {
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		flex: 1,
+		backgroundColor: Constants.secondaryThemeColor,
 	},
 	textContainer: {
 		padding: 20,
@@ -19,8 +22,14 @@ export const styles = {
 		width: 300,
 		height: 300,
 	},
+	title: {
+		color: Constants.primaryThemeColor,
+	},
+	primaryButtonStyle: {
+		backgroundColor: Constants.primaryThemeColor,
+	},
 	subtitle: {
-		color: 'gray',
+		color: Constants.lightThemeColor,
 		fontSize: 22,
 	},
 };
