@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, SafeAreaView, Vibration } from 'react-native';
+import { View, SafeAreaView, Vibration, TouchableOpacity } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Clipboard from '@react-native-community/clipboard';
 import Communications from 'react-native-communications';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { Actions } from 'react-native-router-flux';
+import firebase from 'firebase';
 
 import {
 	uploadCurrentLocation,
@@ -129,6 +131,19 @@ SettingsScreen.navigationOptions = {
 	tabBarIcon: () => (
 		<SettingsTabIcon />
     ),
+	headerRight: () => (
+		<TouchableOpacity
+			onPress={()=>{
+				firebase.auth().signOut();
+				Actions.popTo("authentication");
+			}}>
+			<View style={styles.signOutButton}>
+	            <Icon
+					name="log-out-outline"
+	              	size={30} />
+			</View>
+		</TouchableOpacity>
+          ),
 };
 
 const mapStateToProps = state => {

@@ -15,18 +15,22 @@ export default styles = {
 		width: "40%",
 	},
 	locationButtons: {
-		margin: 10,
+		margin: 5,
 	},
 	container: {
 		alignItems: 'center',
 		padding: 15,
 		flex: 1,
-	}, accessCode: {
+	},
+	accessCode: {
 		color: 'red',
 		margin: 15,
 		fontWeight: 'bold',
 	},
 	safeAreaView: {
 		flex: 1,
+	},
+	signOutButton: {
+		paddingRight: 10,
 	},
 };
