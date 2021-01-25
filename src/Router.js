@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Scene, Router, Tabs, Actions } from 'react-native-router-flux';
 
+import SplashScreen from './components/screens/splash/SplashScreen';
 import AuthenticationScreen from './components/screens/authentication/AuthenticationScreen';
 import TargetListScreen from './components/screens/targetList/TargetListScreen';
 import TargetManagementScreen from './components/screens/targetManagement/TargetManagementScreen';
@@ -14,6 +15,9 @@ const RouterComponent = () => {
 			<Scene key="root" hideNavBar>
 				<Scene
 					initial
+					key="splash"
+					component={SplashScreen} />
+				<Scene
 					key="authentication"
 					component={AuthenticationScreen} />
 				<Tabs key="mainFlow"

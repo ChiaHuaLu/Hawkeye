@@ -22,11 +22,6 @@ class AuthenticationScreen extends Component {
 			loading: false,
 		};
 		this.props.clearError();
-		firebase.auth().onAuthStateChanged((user) => {
-	      if (user) {
-			  Actions.mainFlow(); //Triggering Twice on Log In
-		  }
-	    });
 	}
 
 	toggleAuthenticationMethod() {

@@ -45,7 +45,6 @@ const authenticationSuccess = (dispatch) => {
 	dispatch({
 		type: actionTypes.auth.authenticationSuccess,
 	});
-	Actions.mainFlow();
 };
 
 const authenticationFailure = (dispatch, err) => {

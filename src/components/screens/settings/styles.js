@@ -9,7 +9,7 @@ export default styles = {
 		flex: 1,
 	},
 	locationButtonsContainer: {
-		width: "80%",
+		width: "100%",
 	},
 	accessCodeButtons: {
 		width: "40%",

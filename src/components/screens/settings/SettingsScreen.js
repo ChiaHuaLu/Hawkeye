@@ -135,7 +135,6 @@ SettingsScreen.navigationOptions = {
 		<TouchableOpacity
 			onPress={()=>{
 				firebase.auth().signOut();
-				Actions.popTo("authentication");
 			}}>
 			<View style={styles.signOutButton}>
 	            <Icon
