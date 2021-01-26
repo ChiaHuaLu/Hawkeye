@@ -142,11 +142,6 @@ class TargetManagementScreen extends Component {
 	}
 }
 
-TargetManagementScreen.navigationOptions = {
-	title: 'Target List',
-	...SharedStyles.headerStyle
-};
-
 const mapStateToProps = state => {
 	return state;
 };

@@ -12,7 +12,11 @@ import Constants from './constants/constants';
 
 const RouterComponent = () => {
 	return (
-		<Router titleStyle={styles.navigationBar}>
+		<Router
+				navigationBarStyle={styles.navigationBarStyle}
+				titleStyle={styles.headerTitleStyle}
+				rightButtonTextStyle={styles.headerTitleStyle}
+				 >
 			<Scene key="root" hideNavBar>
 				<Scene
 					initial
@@ -50,7 +54,13 @@ const RouterComponent = () => {
 const styles = {
 	tabBar: {
 		backgroundColor: Constants.secondaryThemeColor
-	}
+	},
+	headerTitleStyle: {
+		color: Constants.primaryThemeColor
+	},
+	navigationBarStyle: {
+		backgroundColor: Constants.secondaryThemeColor
+	},
 };
 
 export default RouterComponent;
