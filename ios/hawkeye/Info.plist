@@ -20,12 +20,25 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLIconFile</key>
+			<string>/Users/krisswolf/workspaces/ReactNative/hawkeye/ios/hawkeye/Images.xcassets/AppIcon.appiconset/1024.png</string>
+			<key>CFBundleURLName</key>
+			<string>com.krisswolf.kw.hawkeye</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>hawkeye</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-	<string>This app needs permission to use your camera</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -39,6 +52,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs permission to use your camera</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs permission to get your location</string>
 	<key>UIAppFonts</key>

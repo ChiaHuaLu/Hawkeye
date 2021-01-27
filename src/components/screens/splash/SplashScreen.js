@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, SafeAreaView, Image, Text as NativeText } from 'react-native';
+import { View, SafeAreaView, Image, Text as NativeText, Platform, Linking } from 'react-native';
 import { Text, Button, Divider } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
@@ -19,10 +19,41 @@ class SplashScreen extends Component {
 		};
 	}
 
+	componentWillUnmount() {
+		Linking.removeEventListener('url', this.handleOpenURL);
+	}
+
+	handleOpenURL = (event) => {
+		this.navigate(event.url);
+	}
+
+	navigate = (url) => {
+		const { navigate } = this.props.navigation;
+		const route = url.replace(/.*?:\/\//g, '');
+		const accessCode = route.match(/\/([^\/]+)\/?$/)[1];
+		const routeName = route.split('/')[0];
+
+		if (routeName === 'addTarget') {
+			setTimeout(() => {
+				Actions.targetManagement({edit: {accessCode}});
+			}, 1000);
+			
+		};
+	}
+
+
 	componentDidMount() {
 		setTimeout(() => {
 			this.proceedToNextScreen();
 		}, splashInterval * 1000);
+
+		if (Platform.OS === 'android') {
+			Linking.getInitialURL().then(url => {
+				this.navigate(url);
+			});
+		} else {
+			Linking.addEventListener('url', this.handleOpenURL);
+		}
 	}
 
 	proceedToNextScreen() {
