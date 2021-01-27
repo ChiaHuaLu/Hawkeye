@@ -39,25 +39,28 @@ class TargetManagementScreen extends Component {
 		}
 	}
 
-	enableOrDisableSaveButton(key, value, show) {
-		const nextState = {...this.state, [key]:value}
-		const shouldShow = nextState.name && nextState.accessCode || show;
+	enableOrDisableSaveButton(newValues) {
+		const nextState = {...this.state, ...newValues};
+		const shouldShow = nextState.name && nextState.accessCode;
 		this.props.navigation.setParams({
 			'onRight': shouldShow ? this.save.bind(this) : undefined,
 			'rightTitle': shouldShow ? 'Save' : undefined,
 		});
 	}
 
-	updateState(key, value) {
-		this.enableOrDisableSaveButton(key, value);
-		this.setState({...this.state, [key]: value, testConnection: false});
+	updateState(newValues) {
+		this.enableOrDisableSaveButton(newValues);
+		this.setState({...this.state, ...newValues, testConnection: false});
 	}
 
 	componentDidMount() {
 		const target = this.props.edit;
 		if (target) {
-			this.enableOrDisableSaveButton(null, null, true);
-			this.setState({name: target.name, accessCode: target.accessCode});
+			this.setState({
+				...this.state,
+				name: target.name,
+				accessCode: target.accessCode
+			});
 		}
 	}
 
@@ -118,12 +121,12 @@ class TargetManagementScreen extends Component {
 				<View style={styles.container}>
 					{ this.renderFormTitle() }
 					<Input
-						onChangeText={this.updateState.bind(this, 'name')}
+						onChangeText={(newName) => {this.updateState({'name': newName})}}
 						value={this.state.name}
 						placeholder="Dad"
 						label="Target Nickname" />
 					<Input
-						onChangeText={this.updateState.bind(this, 'accessCode')}
+						onChangeText={(newCode) => {this.updateState({'accessCode': newCode})}}
 						value={this.state.accessCode}
 						placeholder="-AwBxCyDz"
 						label="Access Code" />
