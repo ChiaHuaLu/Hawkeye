@@ -10,7 +10,7 @@ import {
 } from '../../../actions/LocationActions';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
-import { getLocationInterval } from '../../../helpers/locationHelper';
+import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import NavigationDisplay from './navigationDisplay'
 import { ScannerTabIcon } from '../../icons';
 import styles from './styles';
@@ -25,20 +25,31 @@ class ScannerScreen extends Component {
 	}
 
 	componentDidMount() {
-		const getLocation = ((location) => {
-			if (!this.props.navigation.isFocused()) {
-				clearInterval(this.state.interval);
-			} else {
+		const processLocation = ((location) => {
+			if (this.props.navigation.isFocused()) {
 				console.log("Scanner Get Location");
 				this.props.updateCurrentLocation(location, this.props.location.accessCode);
 				this.props.fetchLocation(this.props.targets.activeTarget);
 			}
 		});
 
-		const interval = getLocationInterval(getLocation,
+		const processLocationCondition = () => {
+			const condition = this.props.navigation.isFocused()
+				&& this.props.targets.activeTarget !== '';
+			return condition;
+		}
+
+		const interval = runIntervalIfConditionMet(processLocation,
 			Constants.locationUpdateIntervalSeconds,
-			Constants.locationUpdateIntervalSeconds);
+			Constants.locationUpdateIntervalSeconds,
+			processLocationCondition);
+
 		this.setState({...this.state, interval});
+	}
+
+	componentWillUnmount() {
+		if (this.state.interval)
+			clearInterval(this.state.interval);
 	}
 
 	render() {

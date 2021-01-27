@@ -13,7 +13,7 @@ import {
  } from '../../../actions/LocationActions';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
-import { getLocationInterval } from '../../../helpers/locationHelper';
+import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
 import styles from './styles';
 
@@ -44,9 +44,10 @@ class SettingsScreen extends Component {
 			this.props.uploadCurrentLocation(location, accessCode);
 			this.setState({...this.state, loading: false});
 		});
-		const interval = getLocationInterval(uploadUpdatedLocation,
+		const interval = runIntervalIfConditionMet(uploadUpdatedLocation,
 			Constants.locationUpdateIntervalSeconds,
-			Constants.locationUpdateIntervalSeconds);
+			Constants.locationUpdateIntervalSeconds,
+			this.props.navigation.isFocused);
 		this.setState({...this.state, interval: interval, broadcasting: true, loading: true});
 	}
 

@@ -12,10 +12,16 @@ export const getLocation = (action, timeout) => {
 	});
 };
 
-export const getLocationInterval = (action, timeout, interval) => {
-	getLocation(action, timeout);
+export const runIntervalIfConditionMet = (actionNeedingLocation, timeout, interval, condition) => {
+	const getAndProcessLocation = () => {
+		getLocation(actionNeedingLocation, timeout);
+	};
+
+	getAndProcessLocation();
 
 	return setInterval(() => {
-		getLocation(action, timeout);
+		if (condition()) {
+			getAndProcessLocation();
+		}
 	}, interval * 1000);
 };
