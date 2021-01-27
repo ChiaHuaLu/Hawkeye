@@ -26,7 +26,7 @@ const RouterComponent = () => {
 					key="authentication"
 					component={AuthenticationScreen} />
 				<Tabs key="mainFlow"
-					tabBarStyle={styles.tabBar}
+					tabBarStyle={styles.tabBarStyle}
 					headerLayoutPreset={'center'}>
 					<Scene
 						key="targetFlow"
@@ -37,6 +37,7 @@ const RouterComponent = () => {
 							component={TargetListScreen} />
 						<Scene
 							key="targetManagement"
+							tintColor={Constants.primaryThemeColor}
 							component={TargetManagementScreen} />
 					</Scene>
 					<Scene
@@ -52,7 +53,7 @@ const RouterComponent = () => {
 };
 
 const styles = {
-	tabBar: {
+	tabBarStyle: {
 		backgroundColor: Constants.secondaryThemeColor
 	},
 	headerTitleStyle: {
