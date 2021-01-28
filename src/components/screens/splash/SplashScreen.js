@@ -33,11 +33,10 @@ class SplashScreen extends Component {
 		const accessCode = route.match(/\/([^\/]+)\/?$/)[1];
 		const routeName = route.split('/')[0];
 
-		if (routeName === 'addTarget') {
+		if (routeName === 'addTarget' && accessCode) {
 			setTimeout(() => {
-				Actions.targetManagement({edit: {accessCode}});
-			}, 1000);
-			
+				Actions.push('targetManagement', {edit: {accessCode}});
+			}, splashInterval * 2 * 1000);
 		};
 	}
 
@@ -49,7 +48,9 @@ class SplashScreen extends Component {
 
 		if (Platform.OS === 'android') {
 			Linking.getInitialURL().then(url => {
-				this.navigate(url);
+				if (url) {
+					this.navigate(url);
+				}
 			});
 		} else {
 			Linking.addEventListener('url', this.handleOpenURL);
