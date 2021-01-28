@@ -45,7 +45,7 @@ export default styles = {
 		...styles.reticleContainer,
 		alignItems: 'flex-start',
 		justifyContent: 'flex-start',
-		height: reticleSize *2,
+		height: reticleSize * 3,
 		width: 20,
 	},
 	reticleContainer: {

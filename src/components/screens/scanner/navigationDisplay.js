@@ -28,14 +28,29 @@ const NaivgationDisplay = ({location, targets}) => {
 
 	const getReticleColor = (headingCorrection, pitchCorrection) => {
 		const correctionMagnitude = getCorrectionMagnitude(headingCorrection, pitchCorrection);
-		const maxApproxAngle = 30;
+		const maxApproxAngle = 90;
+		const maxColorValue = 255;
 		if (correctionMagnitude < 1) {
 			return 'green';
 		}
 		if (correctionMagnitude < maxApproxAngle) {
-			return `rgb(255, ${255 - (correctionMagnitude / 20 * 255)}, 0)`
+			return `rgb(${maxColorValue}, ${maxColorValue - (correctionMagnitude / maxApproxAngle * maxColorValue)}, 0)`
 		}
 		return 'red';
+	}
+
+	const getArrowSize = (headingCorrection, pitchCorrection) => {
+		const correctionMagnitude = getCorrectionMagnitude(headingCorrection, pitchCorrection);
+		const maxApproxAngle = 90;
+		const maxArrowSize = 40;
+		const minArrowSize = 3;
+		if (correctionMagnitude < 1) {
+			return minArrowSize;
+		}
+		if (correctionMagnitude < maxApproxAngle) {
+			return minArrowSize + (correctionMagnitude * (maxArrowSize-minArrowSize)/ maxApproxAngle)
+		}
+		return maxArrowSize;
 	}
 
 	const targetLocation = location.targetLocations[activeTarget];
@@ -64,8 +79,10 @@ const NaivgationDisplay = ({location, targets}) => {
 	const arrowDegree = getCorrectionArrowAngle(headingCorrection, pitchCorrection);
 
 	const reticleElementsColor = getReticleColor(headingCorrection, pitchCorrection);
+
 	const reticleColor = {borderColor: reticleElementsColor};
 	const reticleArrowColor = {borderBottomColor: reticleElementsColor};
+	const reticleArrowSize = {borderBottomWidth: getArrowSize(headingCorrection, pitchCorrection)};
 
 	return (
 		<>
@@ -74,7 +91,7 @@ const NaivgationDisplay = ({location, targets}) => {
 			</View>
 			<View style={styles.reticleContainer}>
 				<View style={[styles.reticleArrowContainer, {transform: [{rotate: `${arrowDegree}deg`}]}]}>
-					<View style={[styles.reticleArrow, reticleArrowColor]}></View>
+					<View style={[styles.reticleArrow, reticleArrowColor, reticleArrowSize]}></View>
 				</View>
 			</View>
 
