@@ -8,15 +8,23 @@ import MapView, { Marker } from 'react-native-maps';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
 import { fetchLocation } from '../../../actions/LocationActions';
-import { addTarget, deleteTarget } from '../../../actions/TargetActions';
+import {
+	addTarget,
+	deleteTarget,
+	toggleTrackTarget,
+} from '../../../actions/TargetActions';
 import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
 import styles from './styles';
 
 class TargetManagementScreen extends Component {
 
 	save() {
-		if (this.props.edit)
+		if (this.props.edit) {
 			this.props.deleteTarget(this.props.edit.accessCode);
+			if (this.props.edit.accessCode !== this.state.accessCode) {
+				this.props.toggleTrackTarget(this.state.accessCode);
+			}
+		}
 		this.props.addTarget(this.state.name, this.state.accessCode);
 		this.props.fetchLocation(this.state.accessCode);
 		Actions.popTo('targetList');
@@ -151,5 +159,5 @@ const mapStateToProps = state => {
 
 export default connect(
 	mapStateToProps,
-	{ addTarget, fetchLocation, deleteTarget }
+	{ addTarget, fetchLocation, deleteTarget, toggleTrackTarget }
 )(TargetManagementScreen);
