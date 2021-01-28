@@ -75,29 +75,14 @@ export const meterToYard = (meters) => {
 	return (meters * yardsPerMeter).toFixed(4);
 };
 
-export const getHeadingCorrection = (targetHeading, currentHeading) => {
-	var correction = targetHeading - currentHeading;
-	correction = correction > 180 ? correction -= 360 : correction;
+export const getHeadingDeviation = (targetHeading, currentHeading) => {
+	var deviation = targetHeading - currentHeading;
+	deviation = deviation > 180 ? deviation -= 360 : deviation;
 
-	return correction.toFixed(4);
+	return deviation.toFixed(4);
 };
 
-export const getPitchCorrection = (targetPitch, currentPitch) => {
-	var correction = targetPitch - currentPitch;
-	return correction.toFixed(4);
-};
-
-export const getCorrectionArrowAngle = (headingCorrection, pitchCorrection) => {
-	var unitHeading = headingCorrection / 180;
-	var unitPitch = pitchCorrection / 90;
-	var angle = radiansToDegrees(Math.atan(unitHeading/unitPitch));
-	unitPitch < 0 ? angle += 180 : null
-
-  	return Math.round(angle);
-};
-
-export const getCorrectionMagnitude = (	headingCorrection, pitchCorrection) => {
-	const magnitude = Math.sqrt(headingCorrection ** 2 + pitchCorrection ** 2);
-	
-	return magnitude;
+export const getPitchDeviation = (targetPitch, currentPitch) => {
+	var deviation = targetPitch - currentPitch;
+	return deviation.toFixed(4);
 };

@@ -3,6 +3,11 @@ import firebase from 'firebase';
 import { actionTypes } from './types';
 
 export const fetchLocation = (accessCode) => {
+	if (!accessCode)
+		return {
+			type: actionTypes.location.fetchLocation,
+			payload: {},
+		}
 	return (dispatch) => {
 		console.log("Fetch Location");
 		firebase.database().ref(`location/${accessCode}`).once('value').then((snapshot) => {

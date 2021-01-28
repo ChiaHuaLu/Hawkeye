@@ -4,104 +4,60 @@ import { Text } from 'react-native-elements';
 import { View } from 'react-native';
 
 import {
-	bearingToTarget,
 	directDistance,
-	elevationToTarget,
-	getHeadingCorrection,
-	getPitchCorrection,
-	getCorrectionArrowAngle,
-	getCorrectionMagnitude,
 } from '../../../helpers/calculator';
+import {
+	getHeadingAndPitchDeviations,
+	getReticleStyles,
+	getArrowContainerStyles,
+	getReticleArrowStyles,
+} from './reticleElementsHelpers';
 import styles from './styles';
 
 const NaivgationDisplay = ({location, targets}) => {
 
 	const { activeTarget } = targets;
-	if (activeTarget === '') {
-		return (
-			<View style={styles.container}>
-			<View style={styles.directionsDisplay}>
-				<Text h3>No Active Target</Text>
-			</View></View>
-		);
-	}
-
-	const getReticleColor = (headingCorrection, pitchCorrection) => {
-		const correctionMagnitude = getCorrectionMagnitude(headingCorrection, pitchCorrection);
-		const maxApproxAngle = 90;
-		const maxColorValue = 255;
-		if (correctionMagnitude < 1) {
-			return 'green';
-		}
-		if (correctionMagnitude < maxApproxAngle) {
-			return `rgb(${maxColorValue}, ${maxColorValue - (correctionMagnitude / maxApproxAngle * maxColorValue)}, 0)`
-		}
-		return 'red';
-	}
-
-	const getArrowSize = (headingCorrection, pitchCorrection) => {
-		const correctionMagnitude = getCorrectionMagnitude(headingCorrection, pitchCorrection);
-		const maxApproxAngle = 90;
-		const maxArrowSize = 40;
-		const minArrowSize = 3;
-		if (correctionMagnitude < 1) {
-			return minArrowSize;
-		}
-		if (correctionMagnitude < maxApproxAngle) {
-			return minArrowSize + (correctionMagnitude * (maxArrowSize-minArrowSize)/ maxApproxAngle)
-		}
-		return maxArrowSize;
-	}
-
-	const targetLocation = location.targetLocations[activeTarget];
-	if (targetLocation === null ) {
-		return (
-			<View style={styles.container}>
-			<View style={styles.directionsDisplay}>
-				<Text h3>Target Unavailable</Text>
-			</View></View>
-		);
-	}
-
 	const myLocation = location.currentLocation;
+	const targetLocation = location.targetLocations[activeTarget];
+
+	if (!targetLocation || targetLocation === {}) {
+		const notSelectedText = 'No Targets Selected';
+		const notAvailableText = 'Target Unavailable'
+		return (
+			<View style={styles.container}>
+			<View style={styles.directionsDisplay}>
+				<Text h3>{activeTarget ? notAvailableText : notSelectedText}</Text>
+			</View></View>
+		);
+	}
+
+	console.log("Target is Available", targetLocation)
 
 	const distanceToTarget = directDistance(myLocation, targetLocation);
-	const headingToTarget = bearingToTarget(myLocation, targetLocation);
-	const pitchToTarget = elevationToTarget(myLocation, targetLocation);
+	const { headingDeviation, pitchDeviation, combinedDeviation } =
+		getHeadingAndPitchDeviations(myLocation, targetLocation, useSensorFusion());
 
-	const { ahrs } = useSensorFusion();
-	const { heading, roll } = ahrs.getEulerAngles();
-	const currentHeading = ((360+270-toDegrees(heading))%360).toFixed(2);
-	const currentPitch = ((toDegrees(roll)-90)%360).toFixed(2); //front-back tilt (ios = android + 180)
-
-	const headingCorrection = getHeadingCorrection(headingToTarget, currentHeading);
-	const pitchCorrection = getPitchCorrection(pitchToTarget, currentPitch);
-	const arrowDegree = getCorrectionArrowAngle(headingCorrection, pitchCorrection);
-
-	const reticleElementsColor = getReticleColor(headingCorrection, pitchCorrection);
-
-	const reticleColor = {borderColor: reticleElementsColor};
-	const reticleArrowColor = {borderBottomColor: reticleElementsColor};
-	const reticleArrowSize = {borderBottomWidth: getArrowSize(headingCorrection, pitchCorrection)};
+	const reticleStyles = getReticleStyles(combinedDeviation);
+	const arrowContainerStyles = getArrowContainerStyles(headingDeviation, pitchDeviation);
+	const arrowStyles = getReticleArrowStyles(combinedDeviation);
 
 	return (
 		<>
 			<View style={styles.reticleContainer}>
-				<View style={[styles.reticle, reticleColor]}></View>
+				<View style={reticleStyles}></View>
 			</View>
 			<View style={styles.reticleContainer}>
-				<View style={[styles.reticleArrowContainer, {transform: [{rotate: `${arrowDegree}deg`}]}]}>
-					<View style={[styles.reticleArrow, reticleArrowColor, reticleArrowSize]}></View>
+				<View style={arrowContainerStyles}>
+					<View style={arrowStyles}></View>
 				</View>
 			</View>
 
 			<View style={styles.container}>
 				<View style={styles.directionsDisplay}>
 					<Text h5 style={styles.directionsText}>Distance:  {distanceToTarget} m</Text>
-					<Text h5 style={styles.directionsText}>Heading:  {headingCorrection}°</Text>
-					<Text h5 style={styles.directionsText}>Pitch:  {pitchCorrection}°</Text>
+					<Text h5 style={styles.directionsText}>Heading:  {headingDeviation}°</Text>
+					<Text h5 style={styles.directionsText}>Pitch:  {pitchDeviation}°</Text>
 				</View>
-
 			</View>
 		</>
 	);
