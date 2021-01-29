@@ -7,6 +7,8 @@ import MapView, { Marker } from 'react-native-maps';
 
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
+import strings from '../../../assets/strings/en';
+import routeNames from '../../../constants/routeNames';
 import { fetchLocation } from '../../../actions/LocationActions';
 import {
 	addTarget,
@@ -28,7 +30,7 @@ class TargetManagementScreen extends Component {
 		}
 		this.props.addTarget(this.state.name, this.state.accessCode);
 		this.props.fetchLocation(this.state.accessCode);
-		Actions.popTo('targetList');
+		Actions.popTo(routeNames.targetList);
 	}
 
 	deleteThisTarget() {
@@ -59,7 +61,7 @@ class TargetManagementScreen extends Component {
 		const shouldShow = nextState.name && nextState.accessCode;
 		this.props.navigation.setParams({
 			'onRight': shouldShow ? this.save.bind(this) : undefined,
-			'rightTitle': shouldShow ? 'Save' : undefined,
+			'rightTitle': shouldShow ? strings.saveButtonText : undefined,
 		});
 	}
 
@@ -81,7 +83,7 @@ class TargetManagementScreen extends Component {
 
 	renderFormTitle() {
 		const modifyMode = this.props.edit;
-		const title = modifyMode ? "Edit Details" : "Add Target";
+		const title = modifyMode ? strings.editDetailsHeader : strings.addTargetHeader;
 
 		return <Text h2>{title}</Text>;
 	}
@@ -135,8 +137,8 @@ class TargetManagementScreen extends Component {
 		var currentAccessCode = this.props.edit ? this.props.edit.accessCode : null;
 
 		if (activeTarget === currentAccessCode)
-			return 'Untrack';
-		return 'Track';
+			return strings.untrackButton;
+		return strings.trackButton;
 	}
 
 	renderListManagementButtons() {
@@ -147,7 +149,7 @@ class TargetManagementScreen extends Component {
 				<Button
 					container={[styles.listManagementButtonContainer]}
 					buttonStyle={[styles.listManagementButton, styles.deleteButton]}
-					title="Delete"
+					title={strings.deleteButton}
 					onPress={() => {
 						this.setState({...this.state, showModal: true});
 					}} />
@@ -171,18 +173,18 @@ class TargetManagementScreen extends Component {
 					<Input
 						onChangeText={(newName) => {this.updateState({'name': newName})}}
 						value={this.state.name}
-						placeholder="Dad"
-						label="Target Nickname" />
+						placeholder={strings.targetNicknamePlaceholder}
+						label={strings.targetNicknameLabel} />
 					<Input
 						onChangeText={(newCode) => {this.updateState({'accessCode': newCode})}}
 						value={this.state.accessCode}
-						placeholder="-AwBxCyDz"
-						label="Access Code" />
+						placeholder={strings.targetAccessCodePlaceholder}
+						label={strings.targetAccessCodeLabel} />
 
 					{ this.renderListManagementButtons() }
 
 					<Button
-						title="Test Connection"
+						title={strings.testConnectionButton}
 						containerStyle={styles.testButton}
 						buttonStyle={SharedStyles.buttonStyle}
 						loading={this.props.location.loading}
@@ -194,10 +196,10 @@ class TargetManagementScreen extends Component {
 				<ConfirmationBottomSheet
 					visible={this.state.showModal}
 					hideModal={() => {this.setState({...this.state, showModal: false})}}
-					promptText="Are you sure you want to remove this from your Target List?"
-					confirmText="Delete Target"
+					promptText={strings.deleteTargetConfirmationPrompt}
+					confirmText={strings.deleteTargetConfirmationButton}
 					onConfirm={this.deleteThisTarget.bind(this)}
-					declineText="Cancel" />
+					declineText={strings.cancelButton} />
 			</SafeAreaView>
 		);
 	}

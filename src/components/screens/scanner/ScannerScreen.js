@@ -10,6 +10,7 @@ import {
 } from '../../../actions/LocationActions';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
+import strings from '../../../assets/strings/en';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import NavigationDisplay from './navigationDisplay'
 import { ScannerTabIcon } from '../../icons';
@@ -73,7 +74,7 @@ class ScannerScreen extends Component {
 }
 
 ScannerScreen.navigationOptions = {
-	title: 'Scan',
+	title: strings.scannerScreenTitle,
 	tabBarIcon: () => (
 		<ScannerTabIcon />
     ),

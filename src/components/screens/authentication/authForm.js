@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Hawkeye from '../../../assets/hawkeyeLogo/blackLogo.png';
 import SharedStyles from '../../../constants/sharedStyles';
+import strings from '../../../assets/strings/en';
 import { authFormStyles } from './styles';
 
 class AuthForm extends Component {
@@ -35,21 +36,21 @@ class AuthForm extends Component {
 					<Image
 					  style={authFormStyles.logo}
 					  source={Hawkeye} />
-					<Text h1 style={authFormStyles.title}>Hawkeye</Text>
+					<Text h1 style={authFormStyles.title}>{strings.appName}</Text>
 				</View>
 
 				<View style={authFormStyles.formSection}>
 					<View>
 						<Input
-							label="Email"
-							placeholder="person@example.com"
+							label={strings.emailLabel}
+							placeholder={strings.emailPlaceholder}
 							leftIcon={<Icon name="email" size={authFormStyles.iconSize} />}
 							value={this.state.email}
 							onChangeText={this.updateState.bind(this,'email')}
 							errorMessage={this.props.emailError}/>
 						<Input
-							label="Password"
-							placeholder="password"
+							label={strings.passwordLabel}
+							placeholder={strings.passwordPlaceholder}
 							leftIcon={<Icon name="lock" size={authFormStyles.iconSize} />}
 							secureTextEntry
 							value={this.state.password}

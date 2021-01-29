@@ -12,6 +12,7 @@ import {
 	getArrowContainerStyles,
 	getReticleArrowStyles,
 } from './reticleElementsHelpers';
+import strings from '../../../assets/strings/en';
 import styles from './styles';
 
 const NaivgationDisplay = ({location, targets}) => {
@@ -21,8 +22,8 @@ const NaivgationDisplay = ({location, targets}) => {
 	const targetLocation = location.targetLocations[activeTarget];
 
 	if (!targetLocation || targetLocation === {}) {
-		const notSelectedText = 'No Targets Selected';
-		const notAvailableText = 'Target Unavailable'
+		const notSelectedText = strings.noTargetSelectedMessage;
+		const notAvailableText = strings.targetUnavailableMessage;
 		return (
 			<View style={styles.container}>
 			<View style={styles.directionsDisplay}>
@@ -52,9 +53,9 @@ const NaivgationDisplay = ({location, targets}) => {
 
 			<View style={styles.container}>
 				<View style={styles.directionsDisplay}>
-					<Text h5 style={styles.directionsText}>Distance:  {distanceToTarget} m</Text>
-					<Text h5 style={styles.directionsText}>Heading:  {headingDeviation}°</Text>
-					<Text h5 style={styles.directionsText}>Pitch:  {pitchDeviation}°</Text>
+					<Text h5 style={styles.directionsText}>{strings.distanceLabel}:  {distanceToTarget} m</Text>
+					<Text h5 style={styles.directionsText}>{strings.headingLabel}:  {headingDeviation}°</Text>
+					<Text h5 style={styles.directionsText}>{strings.pitchLabel}:  {pitchDeviation}°</Text>
 				</View>
 			</View>
 		</>

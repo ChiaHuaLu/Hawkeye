@@ -8,6 +8,8 @@ import _ from 'lodash';
 
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
+import strings from '../../../assets/strings/en';
+import routeNames from '../../../constants/routeNames';
 import { fetchTargets } from '../../../actions/TargetActions';
 import TargetListItem from './targetListItem';
 import styles from './styles';
@@ -19,7 +21,7 @@ class TargetListScreen extends Component {
 			<FlatList
 				data={this.props.targets}
 				keyExtractor={(item)=>{return item.accessCode}}
-				renderItem={({ item})=> {
+				renderItem={({item})=> {
 					return (
 						<TargetListItem
 							name={item.name}
@@ -32,7 +34,7 @@ class TargetListScreen extends Component {
 	renderNoItemsMessage() {
 		return (
 			<View style={styles.noTargetsView}>
-				<Text style={styles.noTargetsText}>No targets added</Text>
+				<Text style={styles.noTargetsText}>{strings.noTargetsInList}</Text>
 			</View>
 		);
 	}
@@ -54,12 +56,12 @@ class TargetListScreen extends Component {
 }
 
 TargetListScreen.navigationOptions = {
-	title: 'Target List',
+	title: strings.targetListScreenTitle,
 	...SharedStyles.headerStyle,
 	headerRight: () => (
 		<TouchableOpacity
 			onPress={()=>{
-				Actions.targetManagement();
+				Actions[routeNames.targetManagement]();
 			}}>
 			<View style={styles.signOutButton}>
 				<Icon

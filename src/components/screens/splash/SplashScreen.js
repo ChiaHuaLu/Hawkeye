@@ -6,6 +6,8 @@ import firebase from 'firebase';
 
 import SharedStyles from '../../../constants/sharedStyles';
 import Hawkeye from '../../../assets/hawkeyeLogo/splashScreenLogo.png';
+import strings from '../../../assets/strings/en';
+import routeNames from '../../../constants/routeNames';
 import { styles } from './styles';
 
 const splashInterval = 2;
@@ -35,7 +37,7 @@ class SplashScreen extends Component {
 
 		if (routeName === 'addTarget' && accessCode) {
 			setTimeout(() => {
-				Actions.push('targetManagement', {edit: {accessCode}});
+				Actions.push(routeNames.targetManagement, {edit: {accessCode}});
 			}, splashInterval * 2 * 1000);
 		};
 	}
@@ -60,11 +62,11 @@ class SplashScreen extends Component {
 	proceedToNextScreen() {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
-				Actions.popTo('splash');
-				Actions.mainFlow();
+				Actions.popTo(routeNames.splash);
+				Actions[routeNames.mainFlow]();
 			} else {
-				Actions.popTo('splash');
-				Actions.authentication();
+				Actions.popTo(routeNames.splash);
+				Actions[routeNames.authentication]();
 			}
 			setTimeout(() => {
 				this.setState({shouldProceed: true});
@@ -80,7 +82,7 @@ class SplashScreen extends Component {
 				<Button
 					buttonStyle={SharedStyles.buttonStyle}
 					onPress={() => this.proceedToNextScreen()}
-					title='Proceed' />
+					title={strings.splashProceedButton} />
 			</View>
 		);
 	}
@@ -93,10 +95,10 @@ class SplashScreen extends Component {
 			          style={styles.logo}
 			          source={Hawkeye} />
 					<View style={styles.textContainer}>
-						<Text h1 style={styles.title}>Hawkeye</Text>
+						<Text h1 style={styles.title}>{strings.appName}</Text>
 						<NativeText
 							style={styles.subtitle}
-							fontStyle="italic">Pinpoint Your Target
+							fontStyle="italic">{strings.slogan}
 						</NativeText>
 					</View>
 				</View>

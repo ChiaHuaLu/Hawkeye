@@ -5,4 +5,6 @@ export default {
   secondaryThemeColorTranslucent: 'rgba(50, 50, 50, 0.5)',
   lightThemeColor: 'rgb(245, 245, 245)',
   locationUpdateIntervalSeconds: 10,
+
+  authenticationEmailErrorCode: 'auth/invalid-email',
 };

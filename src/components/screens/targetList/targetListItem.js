@@ -9,6 +9,8 @@ import {
 	deleteTarget,
 	toggleTrackTarget,
 } from '../../../actions/TargetActions';
+import strings from '../../../assets/strings/en';
+import routeNames from '../../../constants/routeNames';
 import { fetchLocation } from '../../../actions/LocationActions';
 import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
 import styles from './styles';
@@ -19,7 +21,7 @@ class TargetListItem extends Component {
 	}
 
 	goToTargetManagement() {
-		Actions.targetManagement({edit: this.props, toggleTrack: this.trackTarget.bind(this)});
+		Actions[routeNames.targetManagement]({edit: this.props, toggleTrack: this.trackTarget.bind(this)});
 	}
 
 	deleteItem() {
@@ -46,18 +48,24 @@ class TargetListItem extends Component {
 			const differenceInSeconds = Math.round((Date.now() - location.time) / 1000);
 			return `Updated ${getTimeDifferenceText(differenceInSeconds)}`;
 		}
-		return "Unavailable";
+		return strings.targetStatusUnavailable;
+	}
+
+	getToggleTrackButtonText() {
+		if (this.props.accessCode === this.props.targets.activeTarget)
+			return strings.untrackButton;
+		return strings.trackButton
 	}
 
 	render() {
 		const swipeDeleteButton = [
 			{
-				text: 'Delete',
+				text: strings.deleteButton,
 				backgroundColor: 'red',
 				underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
 				onPress: this.deleteItem.bind(this)
 			}, {
-				text: 'Track',
+				text: this.getToggleTrackButtonText(),
 				backgroundColor: 'green',
 				underlayColor: 'rgba(0, 0, 0, 1, 0.6)',
 				onPress: this.trackTarget.bind(this)

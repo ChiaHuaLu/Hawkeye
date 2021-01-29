@@ -10,6 +10,8 @@ import {
 	clearError,
 	dispatchLoadingAction,
 } from '../../../actions/AuthActions';
+import strings from '../../../assets/strings/en';
+import Constants from '../../../constants/constants';
 import AuthForm from './authForm';
 import { styles } from './styles';
 
@@ -41,17 +43,17 @@ class AuthenticationScreen extends Component {
 
 	getPropsForAuthForm() {
 		const signInUI = {
-			authText:'Log in',
-			alternateAuthText:'Need to Register instead?',
-			onSubmitAction:this.authenticateUser.bind(this),
-			onSubmitText:'Log in'
+			authText: strings.signInHeader,
+			alternateAuthText: strings.goToRegister,
+			onSubmitAction: this.authenticateUser.bind(this),
+			onSubmitText: strings.signInButton
 		};
 
 		const registerUI = {
-			authText:'Registration',
-			alternateAuthText:'Need to log in instead?',
+			authText: strings.registerHeader,
+			alternateAuthText: strings.goToSignIn,
 			onSubmitAction:this.registerUser.bind(this),
-			onSubmitText:'Register'
+			onSubmitText: strings.registerButton
 		};
 
 		var props = this.state.isRegisterMode ? registerUI : signInUI;
@@ -59,7 +61,7 @@ class AuthenticationScreen extends Component {
 
 		if (error && Object.keys(error).length !== 0) {
 			Vibration.vibrate(500);
-			if (error.code === 'auth/invalid-email') {
+			if (error.code === Constants.authenticationEmailErrorCode) {
 				props.emailError = error.message;
 			} else {
 				props.passwordError = error.message;

@@ -7,6 +7,8 @@ import TargetListScreen from './components/screens/targetList/TargetListScreen';
 import TargetManagementScreen from './components/screens/targetManagement/TargetManagementScreen';
 import ScannerScreen from './components/screens/scanner/ScannerScreen';
 import SettingsScreen from './components/screens/settings/SettingsScreen';
+import strings from './assets/strings/en';
+import routeNames from './constants/routeNames';
 import { TargetListTabIcon } from './components/icons';
 import Constants from './constants/constants';
 
@@ -17,34 +19,34 @@ const RouterComponent = () => {
 				titleStyle={styles.headerTitleStyle}
 				rightButtonTextStyle={styles.headerTitleStyle}
 				 >
-			<Scene key="root" hideNavBar>
+			<Scene key={routeNames.root} hideNavBar>
 				<Scene
 					initial
-					key="splash"
+					key={routeNames.splash}
 					component={SplashScreen} />
 				<Scene
-					key="authentication"
+					key={routeNames.authentication}
 					component={AuthenticationScreen} />
-				<Tabs key="mainFlow"
+				<Tabs key={routeNames.mainFlow}
 					tabBarStyle={styles.tabBarStyle}
 					headerLayoutPreset={'center'}>
 					<Scene
-						key="targetFlow"
-						title="Targets"
+						key={routeNames.targetFlow}
+						title={strings.targetsListItemScreenTitle}
 						icon={TargetListTabIcon} >
 						<Scene
-							key="targetList"
+							key={routeNames.targetList}
 							component={TargetListScreen} />
 						<Scene
-							key="targetManagement"
+							key={routeNames.targetManagement}
 							tintColor={Constants.primaryThemeColor}
 							component={TargetManagementScreen} />
 					</Scene>
 					<Scene
-						key="scanner"
+						key={routeNames.scanner}
 						component={ScannerScreen} />
 					<Scene
-						key="settings"
+						key={routeNames.settings}
 						component={SettingsScreen} />
 				</Tabs>
 			</Scene>

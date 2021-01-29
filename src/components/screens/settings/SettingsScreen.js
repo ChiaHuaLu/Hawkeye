@@ -13,6 +13,7 @@ import {
  } from '../../../actions/LocationActions';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
+import strings from '../../../assets/strings/en';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
 import { ConfirmationBottomSheet } from '../../common/confirmationBottomSheet';
@@ -26,20 +27,20 @@ class SettingsScreen extends Component {
 			broadcasting: false,
 			loading: false,
 			showModal: false,
-			copyButtonText: 'Copy'
+			copyButtonText: strings.copyButtonDefault
 		};
 	}
 
 	textAccessCode() {
-		Communications.text(null, `My Hawkeye Access Code is ${this.props.location.accessCode}`);
+		Communications.text(null, `${strings.accessCodeTextMessage} ${this.props.location.accessCode}`);
 	}
 
 	copyToClipboard() {
 		Vibration.vibrate(50);
 		Clipboard.setString(this.props.location.accessCode);
-		this.setState({...this.state, copyButtonText: 'Copied'});
+		this.setState({...this.state, copyButtonText: strings.copyButtonPressed});
 		setTimeout(() => {
-			this.setState({...this.state, copyButtonText: 'Copy'});
+			this.setState({...this.state, copyButtonText: strings.copyButtonDefault});
 		}, 2000);
 	}
 
@@ -74,8 +75,8 @@ class SettingsScreen extends Component {
 
 	getRecordingButtonText() {
 		if (this.state.broadcasting)
-			return "Stop Broadcasting";
-		return "Start Sharing Location";
+			return strings.stopBroadcastingLocationButton;
+		return strings.startBroadcastingLocationButton;
 	}
 
 	deleteLocationData() {
@@ -92,21 +93,21 @@ class SettingsScreen extends Component {
 		return (
 			<SafeAreaView style={styles.safeAreaView}>
 				<View style={styles.container}>
-					<Text h3>My Access Code</Text>
+					<Text h3>{strings.accessCodeDisplayTitle}</Text>
 					<Text h4 style={styles.accessCode}>{this.props.location.accessCode}</Text>
 
 					<View style={styles.buttonsContainer}>
 						<Button
 							containerStyle={styles.accessCodeButtons}
 							buttonStyle={SharedStyles.buttonStyle}
-							title="Text"
+							title={strings.textButton}
 							onPress={this.textAccessCode.bind(this)}
 							disabled={!this.props.location.accessCode} />
 						<Button
 						 	containerStyle={styles.accessCodeButtons}
 							buttonStyle={SharedStyles.buttonStyle}
 							icon={
-								this.state.copyButtonText === 'Copied'
+								this.state.copyButtonText === strings.copyButtonPressed
 								? <Icon name="checkmark-circle-outline"
 									size={styles.copyButtonIcon.iconSize}
 									color={styles.copyButtonIcon.color} />
@@ -135,7 +136,7 @@ class SettingsScreen extends Component {
 						<Button
 							containerStyle={styles.locationButtons}
 							buttonStyle={styles.deleteButton}
-							title="Delete Location Data"
+							title={strings.deleteLocationButton}
 							onPress={() => {this.setState({...this.state, showModal: true})}}
 							disabled={this.shouldDisableDeleteButton()}
 							/>
@@ -143,10 +144,10 @@ class SettingsScreen extends Component {
 					<ConfirmationBottomSheet
 						visible={this.state.showModal}
 						hideModal={() => {this.setState({...this.state, showModal: false})}}
-						promptText="Deleting your location data will disable your current code from being able to check your location."
-						confirmText="Delete Data & Invalidate Code"
+						promptText={strings.deleteLocationConfirmationPrompt}
+						confirmText={strings.deleteLocationConfirmButton}
 						onConfirm={this.deleteLocationData.bind(this)}
-						declineText="Cancel" />
+						declineText={strings.cancelButton} />
 				</View>
 			</SafeAreaView>
 		);
@@ -154,7 +155,7 @@ class SettingsScreen extends Component {
 }
 
 SettingsScreen.navigationOptions = {
-	title: 'Settings  ',
+	title: strings.settingsScreenTitle,
 	tabBarIcon: () => (
 		<SettingsTabIcon />
     ),
