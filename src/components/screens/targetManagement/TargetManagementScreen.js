@@ -140,18 +140,18 @@ class TargetManagementScreen extends Component {
 			<View style={styles.listManagementButtonContainerView}>
 				<Button
 					container={[styles.listManagementButtonContainer]}
-					buttonStyle={[styles.listManagementButton, styles.trackButton]}
-					title={this.getTrackToggleButtonText()}
-					onPress={() => {
-						this.props.toggleTrack();
-						Actions.pop();
-					}} />
-				<Button
-					container={[styles.listManagementButtonContainer]}
 					buttonStyle={[styles.listManagementButton, styles.deleteButton]}
 					title="Delete"
 					onPress={() => {
 						this.props.deleteTarget(this.props.edit.accessCode);
+						Actions.pop();
+					}} />
+				<Button
+					container={[styles.listManagementButtonContainer]}
+					buttonStyle={[styles.listManagementButton, styles.trackButton]}
+					title={this.getTrackToggleButtonText()}
+					onPress={() => {
+						this.props.toggleTrack();
 						Actions.pop();
 					}} />
 			</View>
