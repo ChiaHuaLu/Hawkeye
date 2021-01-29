@@ -31,8 +31,6 @@ const NaivgationDisplay = ({location, targets}) => {
 		);
 	}
 
-	console.log("Target is Available", targetLocation)
-
 	const distanceToTarget = directDistance(myLocation, targetLocation);
 	const { headingDeviation, pitchDeviation, combinedDeviation } =
 		getHeadingAndPitchDeviations(myLocation, targetLocation, useSensorFusion());

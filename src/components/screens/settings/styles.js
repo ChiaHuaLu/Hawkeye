@@ -41,4 +41,8 @@ export default styles = {
 	primaryButtonStyle: {
 		backgroundColor: Constants.primaryThemeColor,
 	},
+	copyButtonIcon: {
+		iconSize: 20,
+		color: 'white',
+	},
 };

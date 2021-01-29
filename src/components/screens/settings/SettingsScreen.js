@@ -26,6 +26,7 @@ class SettingsScreen extends Component {
 			broadcasting: false,
 			loading: false,
 			showModal: false,
+			copyButtonText: 'Copy'
 		};
 	}
 
@@ -36,6 +37,10 @@ class SettingsScreen extends Component {
 	copyToClipboard() {
 		Vibration.vibrate(50);
 		Clipboard.setString(this.props.location.accessCode);
+		this.setState({...this.state, copyButtonText: 'Copied'});
+		setTimeout(() => {
+			this.setState({...this.state, copyButtonText: 'Copy'});
+		}, 2000);
 	}
 
 	startRecordingLocation() {
@@ -100,7 +105,14 @@ class SettingsScreen extends Component {
 						<Button
 						 	containerStyle={styles.accessCodeButtons}
 							buttonStyle={SharedStyles.buttonStyle}
-							title="Copy"
+							icon={
+								this.state.copyButtonText === 'Copied'
+								? <Icon name="checkmark-circle-outline"
+									size={styles.copyButtonIcon.iconSize}
+									color={styles.copyButtonIcon.color} />
+								: null
+							}
+							title={this.state.copyButtonText}
 							onPress={this.copyToClipboard.bind(this)}
 							disabled={!this.props.location.accessCode} />
 					</View>
