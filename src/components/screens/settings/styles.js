@@ -3,7 +3,7 @@ import Constants from '../../../constants/constants';
 export default styles = {
 	buttonsContainer : {
 		flexDirection: 'row',
-		width: "80%",
+		alignSelf: 'stretch',
 		justifyContent: 'space-around',
 	},
 	middleContainer: {
@@ -11,7 +11,7 @@ export default styles = {
 		flex: 1,
 	},
 	locationButtonsContainer: {
-		width: "100%",
+		alignSelf: 'stretch',
 	},
 	accessCodeButtons: {
 		width: "40%",

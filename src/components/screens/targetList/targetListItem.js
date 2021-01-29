@@ -19,7 +19,7 @@ class TargetListItem extends Component {
 	}
 
 	goToTargetManagement() {
-		Actions.targetManagement({edit: this.props});
+		Actions.targetManagement({edit: this.props, toggleTrack: this.trackTarget.bind(this)});
 	}
 
 	deleteItem() {

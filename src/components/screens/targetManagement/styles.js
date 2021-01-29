@@ -7,17 +7,32 @@ export default styles = {
 		height: '100%',
 	},
 	testButton: {
-		width: '50%',
+		alignSelf: 'stretch',
 	},
 	map: {
 		height: '70%',
-		width: '100%',
+		alignSelf: 'stretch',
 	},
 	testView: {
 		flexDirection: 'column',
 		flex: 1,
-		width: '100%',
+		alignSelf: 'stretch',
 		alignItems: 'center',
 		padding: 20,
+	},
+	listManagementButtonContainerView: {
+		flexDirection: 'row',
+		alignSelf: 'stretch',
+		justifyContent: 'space-between',
+	},
+	listManagementButton: {
+		width: 150,
+		margin: 15,
+	},
+	trackButton: {
+		backgroundColor: 'green',
+	},
+	deleteButton: {
+		backgroundColor: 'red',
 	},
 };

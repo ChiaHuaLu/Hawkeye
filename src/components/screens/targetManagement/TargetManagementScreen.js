@@ -123,6 +123,41 @@ class TargetManagementScreen extends Component {
 		return <Text>Unavailable</Text>;
 	}
 
+	getTrackToggleButtonText() {
+		// return "Delete"
+		const { activeTarget } = this.props.targets;
+		var currentAccessCode = this.props.edit ? this.props.edit.accessCode : null;
+
+		if (activeTarget === currentAccessCode)
+			return 'Untrack';
+		return 'Track';
+	}
+
+	renderListManagementButtons() {
+		if (!this.props.edit)
+			return null;
+		return (
+			<View style={styles.listManagementButtonContainerView}>
+				<Button
+					container={[styles.listManagementButtonContainer]}
+					buttonStyle={[styles.listManagementButton, styles.trackButton]}
+					title={this.getTrackToggleButtonText()}
+					onPress={() => {
+						this.props.toggleTrack();
+						Actions.pop();
+					}} />
+				<Button
+					container={[styles.listManagementButtonContainer]}
+					buttonStyle={[styles.listManagementButton, styles.deleteButton]}
+					title="Delete"
+					onPress={() => {
+						this.props.deleteTarget(this.props.edit.accessCode);
+						Actions.pop();
+					}} />
+			</View>
+		);
+	}
+
 	render() {
 		return (
 			<SafeAreaView>
@@ -138,6 +173,9 @@ class TargetManagementScreen extends Component {
 						value={this.state.accessCode}
 						placeholder="-AwBxCyDz"
 						label="Access Code" />
+
+					{ this.renderListManagementButtons() }
+
 					<Button
 						title="Test Connection"
 						containerStyle={styles.testButton}
