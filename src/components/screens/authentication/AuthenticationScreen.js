@@ -10,7 +10,7 @@ import {
 	clearError,
 	dispatchLoadingAction,
 } from '../../../actions/AuthActions';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import Constants from '../../../constants/constants';
 import AuthForm from './authForm';
 import { styles } from './styles';

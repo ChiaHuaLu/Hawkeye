@@ -12,7 +12,7 @@ import {
 	getArrowContainerStyles,
 	getReticleArrowStyles,
 } from './reticleElementsHelpers';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import styles from './styles';
 
 const NaivgationDisplay = ({location, targets}) => {

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Hawkeye from '../../../assets/hawkeyeLogo/blackLogo.png';
 import SharedStyles from '../../../constants/sharedStyles';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import { authFormStyles } from './styles';
 
 class AuthForm extends Component {

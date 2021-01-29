@@ -6,7 +6,7 @@ import firebase from 'firebase';
 
 import SharedStyles from '../../../constants/sharedStyles';
 import Hawkeye from '../../../assets/hawkeyeLogo/splashScreenLogo.png';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import routeNames from '../../../constants/routeNames';
 import { styles } from './styles';
 
@@ -19,6 +19,7 @@ class SplashScreen extends Component {
 		this.state = {
 			shouldProceed: false,
 		};
+		console.log("Language: ", strings.getLanguage())
 	}
 
 	componentWillUnmount() {

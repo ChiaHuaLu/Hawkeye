@@ -13,7 +13,7 @@ import {
  } from '../../../actions/LocationActions';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
 import { ConfirmationBottomSheet } from '../../common/confirmationBottomSheet';

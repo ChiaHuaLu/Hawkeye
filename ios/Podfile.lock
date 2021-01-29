@@ -314,6 +314,8 @@ PODS:
     - React-jsi (= 0.63.4)
   - ReactNativeGetLocation (2.0.0):
     - React
+  - ReactNativeLocalization (2.1.6):
+    - React
   - RNCAsyncStorage (1.12.1):
     - React-Core
   - RNCClipboard (1.5.1):
@@ -324,7 +326,7 @@ PODS:
     - React-Core
   - RNReanimated (1.13.2):
     - React-Core
-  - RNScreens (2.15.2):
+  - RNScreens (2.17.1):
     - React-Core
   - RNSensors (5.4.1):
     - React
@@ -387,6 +389,7 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativeGetLocation (from `../node_modules/react-native-get-location`)
+  - ReactNativeLocalization (from `../node_modules/react-native-localization`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
@@ -475,6 +478,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativeGetLocation:
     :path: "../node_modules/react-native-get-location"
+  ReactNativeLocalization:
+    :path: "../node_modules/react-native-localization"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCClipboard:
@@ -537,12 +542,13 @@ SPEC CHECKSUMS:
   React-RCTVibration: ae4f914cfe8de7d4de95ae1ea6cc8f6315d73d9d
   ReactCommon: 73d79c7039f473b76db6ff7c6b159c478acbbb3b
   ReactNativeGetLocation: 6da6fa5cff3ede411d1a0066755d39872b90f593
+  ReactNativeLocalization: dbb269b27d8a84bb22b9c2cdec38ba780b51dd72
   RNCAsyncStorage: b03032fdbdb725bea0bd9e5ec5a7272865ae7398
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNCMaskedView: 5a8ec07677aa885546a0d98da336457e2bea557f
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
-  RNScreens: 3d682bcaba69a4f8e55543d90818704f34338db1
+  RNScreens: b6c9607e6fe47c1b6e2f1910d2acd46dd7ecea3a
   RNSensors: 0c25e336a6302bc70870b15f190c6fdb014bf24c
   RNVectorIcons: f67a1abce2ec73e62fe4606e8110e95a832bc859
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6

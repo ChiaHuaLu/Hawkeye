@@ -7,7 +7,7 @@ import MapView, { Marker } from 'react-native-maps';
 
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import routeNames from '../../../constants/routeNames';
 import { fetchLocation } from '../../../actions/LocationActions';
 import {

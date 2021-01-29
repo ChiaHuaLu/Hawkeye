@@ -8,7 +8,7 @@ import _ from 'lodash';
 
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import routeNames from '../../../constants/routeNames';
 import { fetchTargets } from '../../../actions/TargetActions';
 import TargetListItem from './targetListItem';

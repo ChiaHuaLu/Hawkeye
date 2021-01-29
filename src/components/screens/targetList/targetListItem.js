@@ -9,7 +9,7 @@ import {
 	deleteTarget,
 	toggleTrackTarget,
 } from '../../../actions/TargetActions';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import routeNames from '../../../constants/routeNames';
 import { fetchLocation } from '../../../actions/LocationActions';
 import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';

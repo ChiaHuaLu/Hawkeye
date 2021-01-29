@@ -10,7 +10,7 @@ import {
 } from '../../../actions/LocationActions';
 import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
-import strings from '../../../assets/strings/en';
+import strings from '../../../assets/strings/localizedStrings';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import NavigationDisplay from './navigationDisplay'
 import { ScannerTabIcon } from '../../icons';

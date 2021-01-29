@@ -7,7 +7,7 @@ import TargetListScreen from './components/screens/targetList/TargetListScreen';
 import TargetManagementScreen from './components/screens/targetManagement/TargetManagementScreen';
 import ScannerScreen from './components/screens/scanner/ScannerScreen';
 import SettingsScreen from './components/screens/settings/SettingsScreen';
-import strings from './assets/strings/en';
+import strings from './assets/strings/localizedStrings';
 import routeNames from './constants/routeNames';
 import { TargetListTabIcon } from './components/icons';
 import Constants from './constants/constants';
