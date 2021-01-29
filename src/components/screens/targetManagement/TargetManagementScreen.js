@@ -98,7 +98,7 @@ class TargetManagementScreen extends Component {
 			const differenceInSeconds = Math.round((Date.now() - lastLocation.time) / 1000);
 			return (
 				<View style={styles.testView}>
-				<Text>{lastLocation.latitude}, {lastLocation.longitude}</Text>
+				<Text>( {lastLocation.latitude.toFixed(5)}, {lastLocation.longitude.toFixed(5)} )</Text>
 				<Text>Last updated {getTimeDifferenceText(differenceInSeconds)}</Text>
 				<MapView
 					style={styles.map}
@@ -124,7 +124,6 @@ class TargetManagementScreen extends Component {
 	}
 
 	getTrackToggleButtonText() {
-		// return "Delete"
 		const { activeTarget } = this.props.targets;
 		var currentAccessCode = this.props.edit ? this.props.edit.accessCode : null;
 
