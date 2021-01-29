@@ -15,6 +15,7 @@ import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
+import { ConfirmationBottomSheet } from '../../common/confirmationBottomSheet';
 import styles from './styles';
 
 class SettingsScreen extends Component {
@@ -23,7 +24,8 @@ class SettingsScreen extends Component {
 		super(props);
 		this.state = {
 			broadcasting: false,
-			loading: false
+			loading: false,
+			showModal: false,
 		};
 	}
 
@@ -122,10 +124,17 @@ class SettingsScreen extends Component {
 							containerStyle={styles.locationButtons}
 							buttonStyle={styles.deleteButton}
 							title="Delete Location Data"
-							onPress={this.deleteLocationData.bind(this)}
+							onPress={() => {this.setState({...this.state, showModal: true})}}
 							disabled={this.shouldDisableDeleteButton()}
 							/>
 					</View>
+					<ConfirmationBottomSheet
+						visible={this.state.showModal}
+						hideModal={() => {this.setState({...this.state, showModal: false})}}
+						promptText="Deleting your location data will disable your current code from being able to check your location."
+						confirmText="Delete Data & Invalidate Code"
+						onConfirm={this.deleteLocationData.bind(this)}
+						declineText="Cancel" />
 				</View>
 			</SafeAreaView>
 		);

@@ -14,6 +14,7 @@ import {
 	toggleTrackTarget,
 } from '../../../actions/TargetActions';
 import { getTimeDifferenceText } from '../../../helpers/updateIntervalHelper';
+import { ConfirmationBottomSheet } from '../../common/confirmationBottomSheet';
 import styles from './styles';
 
 class TargetManagementScreen extends Component {
@@ -30,6 +31,11 @@ class TargetManagementScreen extends Component {
 		Actions.popTo('targetList');
 	}
 
+	deleteThisTarget() {
+		this.props.deleteTarget(this.props.edit.accessCode);
+		Actions.pop();
+	}
+
 	testConnection() {
 		const { accessCode } = this.props.edit ? this.props.edit : this.state;
 		Keyboard.dismiss();
@@ -44,6 +50,7 @@ class TargetManagementScreen extends Component {
 			accessCode: '',
 			testMessage: '',
 			testConnection: false,
+			showModal: false,
 		}
 	}
 
@@ -142,8 +149,7 @@ class TargetManagementScreen extends Component {
 					buttonStyle={[styles.listManagementButton, styles.deleteButton]}
 					title="Delete"
 					onPress={() => {
-						this.props.deleteTarget(this.props.edit.accessCode);
-						Actions.pop();
+						this.setState({...this.state, showModal: true});
 					}} />
 				<Button
 					container={[styles.listManagementButtonContainer]}
@@ -185,6 +191,13 @@ class TargetManagementScreen extends Component {
 
 					{this.renderLastKnownPosition()}
 				</View>
+				<ConfirmationBottomSheet
+					visible={this.state.showModal}
+					hideModal={() => {this.setState({...this.state, showModal: false})}}
+					promptText="Are you sure you want to remove this from your Target List?"
+					confirmText="Delete Target"
+					onConfirm={this.deleteThisTarget.bind(this)}
+					declineText="Cancel" />
 			</SafeAreaView>
 		);
 	}
