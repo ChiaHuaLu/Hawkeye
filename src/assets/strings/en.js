@@ -40,7 +40,7 @@ export default en = {
 	pitchLabel: 'Pitch',
 
 	accessCodeDisplayTitle: 'My Access Code',
-	accessCodeTextMessage: 'My Hawkeye Access code is',
+	accessCodeTextMessage: 'My Hawkeye Access Code is {0}',
 	textButton: 'Text',
 	copyButtonDefault: 'Copy',
 	copyButtonPressed: 'Copied!',

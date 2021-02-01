@@ -32,7 +32,7 @@ class SettingsScreen extends Component {
 	}
 
 	textAccessCode() {
-		Communications.text(null, `${strings.accessCodeTextMessage} ${this.props.location.accessCode}`);
+		Communications.text(null, strings.formatString(strings.accessCodeTextMessage, this.props.location.accessCode));
 	}
 
 	copyToClipboard() {
