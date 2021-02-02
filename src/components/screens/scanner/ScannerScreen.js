@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import SensorFusionProvider from 'react-native-sensor-fusion';
 import { RNCamera } from 'react-native-camera';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { Actions } from 'react-native-router-flux';
 
 import {
 	fetchLocation,
@@ -65,7 +67,8 @@ class ScannerScreen extends Component {
 						<SensorFusionProvider>
 							<NavigationDisplay
 							 	targets={this.props.targets}
-								location={this.props.location} />
+								location={this.props.location}
+								cameraConfig={this.props.configuration.camera} />
 						</SensorFusionProvider>
 				</RNCamera>
 			</SafeAreaView>
@@ -79,6 +82,19 @@ ScannerScreen.navigationOptions = {
 		<ScannerTabIcon />
     ),
 	...SharedStyles.headerStyle,
+	headerRight: () => (
+		<TouchableOpacity
+			onPress={()=>{
+				Actions[routeNames.cameraConfiguration]();
+			}}>
+			<View style={styles.signOutButton}>
+				<Icon
+					name="options-outline"
+					size={Constants.navigationIconSize}
+					color={Constants.primaryThemeColor} />
+			</View>
+		</TouchableOpacity>
+	),
 };
 
 const mapStateToProps = state => {

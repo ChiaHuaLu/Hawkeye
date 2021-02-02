@@ -6,6 +6,8 @@ export default routeNames = {
 	targetFlow: 'targetFlow',
 	targetList: 'targetList',
 	targetManagement: 'targetManagement',
+	targetFlow: 'cameraFlow',
 	scanner: 'scanner',
+	cameraConfiguration: 'cameraConfig',
 	settings: 'settings',
 };

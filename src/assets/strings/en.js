@@ -39,6 +39,14 @@ export default en = {
 	headingLabel: 'Heading',
 	pitchLabel: 'Pitch',
 
+	cameraConfigInstruction1: 'In order to place the Target Indicator ◇ on screen, the Angle of View of your camera in the horizontal and vertical directions are needed. Although a default value has been provided, using values taylored to your device may increase accuracy.',
+	cameraConfigInstruction2: 'Please provide the angles as indicated in Blue in the diagrams below, as seen on the previous Scanner page, and press Save. (You may need a paper, pen, and protractor to measure the angles.) Alernatively, press Reset to restore default values or Back Button to cancel.',
+	cameraAngleHorizontalSectionLabel: 'Horizontal',
+	cameraHorizontalAngleInputLabel: 'H Angle of View',
+	cameraAngleVerticalSectionLabel: 'Vertical',
+	cameraVerticalAngleInputLabel: 'V Angle of View',
+	resetButtonText: 'Reset',
+
 	accessCodeDisplayTitle: 'My Access Code',
 	accessCodeTextMessage: 'My Hawkeye Access Code is {0}',
 	textButton: 'Text',
@@ -54,4 +62,5 @@ export default en = {
 	targetsListItemScreenTitle: 'Targets',
 	scannerScreenTitle: 'Scan',
 	settingsScreenTitle: 'Settings  ',
+	cameraConfigurationScreenTitle: 'Camera Config     ',
 };

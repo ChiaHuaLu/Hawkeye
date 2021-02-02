@@ -6,10 +6,11 @@ import AuthenticationScreen from './components/screens/authentication/Authentica
 import TargetListScreen from './components/screens/targetList/TargetListScreen';
 import TargetManagementScreen from './components/screens/targetManagement/TargetManagementScreen';
 import ScannerScreen from './components/screens/scanner/ScannerScreen';
+import CameraConfigurationScreen from './components/screens/cameraConfiguration/CameraConfigurationScreen';
 import SettingsScreen from './components/screens/settings/SettingsScreen';
 import strings from './assets/strings/localizedStrings';
 import routeNames from './constants/routeNames';
-import { TargetListTabIcon } from './components/icons';
+import { TargetListTabIcon, ScannerTabIcon } from './components/icons';
 import Constants from './constants/constants';
 
 const RouterComponent = () => {
@@ -43,8 +44,18 @@ const RouterComponent = () => {
 							component={TargetManagementScreen} />
 					</Scene>
 					<Scene
-						key={routeNames.scanner}
-						component={ScannerScreen} />
+						key={routeNames.cameraFlow}
+						title={strings.scannerScreenTitle}
+						icon={ScannerTabIcon} >
+						<Scene
+							key={routeNames.scanner}
+							component={ScannerScreen} />
+						<Scene
+							key={routeNames.cameraConfiguration}
+							tintColor={Constants.primaryThemeColor}
+							component={CameraConfigurationScreen} />
+					</Scene>
+
 					<Scene
 						key={routeNames.settings}
 						component={SettingsScreen} />

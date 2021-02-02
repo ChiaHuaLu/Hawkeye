@@ -16,7 +16,7 @@ import {
 import strings from '../../../assets/strings/localizedStrings';
 import styles from './styles';
 
-const NaivgationDisplay = ({location, targets}) => {
+const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 
 	const [state, setState] = useState({width: 0, height: 0});
 	const { activeTarget } = targets;
@@ -24,7 +24,10 @@ const NaivgationDisplay = ({location, targets}) => {
 	const targetLocation = location.targetLocations[activeTarget];
 
 	const getTargetIconPositioning = (headingDeviation, pitchDeviation) => {
-		const cameraDimensions = { cameraHeightAngle: 56, cameraWidthAngle: 40};
+		const cameraDimensions = {
+			cameraHeightAngle: cameraConfig.verticalAngleOfView,
+			cameraWidthAngle: cameraConfig.horizontalAngleOfView,
+		};
 		if (state.width !== 0) {
 			const screenDimensions = { screenWidth: state.width, screenHeight:  state.height};
 			const deviations = { headingDeviation, pitchDeviation };

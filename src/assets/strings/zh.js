@@ -21,7 +21,7 @@ export default zh = {
 	trackButton: '開始追踪',
 	untrackButton: '停止追踪',
 
-	saveButtonText: '存檔',
+	saveButtonText: '儲存',
 	editDetailsHeader: '編輯資料',
 	addTargetHeader: '加新目標',
 	targetNicknameLabel: '目標名字',
@@ -39,6 +39,14 @@ export default zh = {
 	headingLabel: '方向',
 	pitchLabel: '俯仰',
 
+	cameraConfigInstruction1: '為了把目標指標 (♢) 正確的放在屏幕上，程式需要你相機的 垂直 與 橫的視角。雖然已經有預設值，使用你手機的真實視角能夠提高準確度。',
+	cameraConfigInstruction2: '請在上一頁（掃描），照著下面圖案指示，提供以藍色指示的角度，然後按儲存。（你可能需要紙，筆，跟量角器。）不然，你可以按 恢復預設值，或回上一頁取消。',
+	cameraAngleHorizontalSectionLabel: '橫視角',
+	cameraHorizontalAngleInputLabel: '橫視角',
+	cameraAngleVerticalSectionLabel: '垂直視角',
+	cameraVerticalAngleInputLabel: '垂直視角',
+	resetButtonText: '復預設值',
+
 	accessCodeDisplayTitle: '我的追踪碼',
 	accessCodeTextMessage: '我的 Hawkeye 追踪碼是 {0}',
 	textButton: '短信',
@@ -54,4 +62,5 @@ export default zh = {
 	targetsListItemScreenTitle: '目標',
 	scannerScreenTitle: '掃描',
 	settingsScreenTitle: '設置  ',
+	cameraConfigurationScreenTitle: '相機設定',
 };
