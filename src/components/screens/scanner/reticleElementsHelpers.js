@@ -96,3 +96,14 @@ const getCombinedDeviation = (headingDeviation, pitchDeviation) => {
 
 	return magnitude;
 };
+
+export const getTargetPosition = (screenDimensions, cameraDimensions, deviations) => {
+	const { screenWidth, screenHeight } = screenDimensions;
+	const { cameraWidthAngle, cameraHeightAngle } = cameraDimensions;
+	const { pitchDeviation, headingDeviation } = deviations;
+
+	var x, y;
+	x = ((headingDeviation / (cameraWidthAngle / 2)) * screenWidth) / 2;
+  	y = ((pitchDeviation / (cameraHeightAngle / 2)) * screenHeight) / 2;
+	return {x, y}
+}

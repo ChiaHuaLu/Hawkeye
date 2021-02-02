@@ -56,4 +56,16 @@ export default styles = {
 		width: '100%',
 		flexDirection: 'column',
 	},
+	targetIndicator: {
+		height: reticleSize/1.5,
+		width: reticleSize/1.5,
+		borderWidth: 2,
+		borderColor: Constants.primaryThemeColor,
+		transform: [
+			{rotate: '45deg'}
+		]
+	},
+	targetDistanceIndicator: {
+		color: Constants.primaryThemeColor,
+	}
 };
