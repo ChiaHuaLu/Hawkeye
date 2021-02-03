@@ -21,7 +21,6 @@ export default (state=INITIAL_STATE, action) => {
 				...state,
 				accessCode: '',
 				loading: false,
-				currentLocation: {},
 			};
 		case actionTypes.location.fetchLocation:
 			return {

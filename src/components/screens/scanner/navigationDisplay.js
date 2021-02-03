@@ -28,7 +28,7 @@ const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 			cameraHeightAngle: cameraConfig.verticalAngleOfView,
 			cameraWidthAngle: cameraConfig.horizontalAngleOfView,
 		};
-		if (state.width !== 0) {
+		if (state.width !== 0 ) {
 			const screenDimensions = { screenWidth: state.width, screenHeight:  state.height};
 			const deviations = { headingDeviation, pitchDeviation };
 			const targetPosition = getTargetPosition(screenDimensions, cameraDimensions, deviations);
@@ -38,7 +38,7 @@ const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 		return {top: 9999, left: 9999};
 	}
 
-	if (!targetLocation || targetLocation === {}) {
+	if (!targetLocation || targetLocation === {} || myLocation === {}) {
 		const notSelectedText = strings.noTargetSelectedMessage;
 		const notAvailableText = strings.targetUnavailableMessage;
 		return (
@@ -56,7 +56,6 @@ const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 	const reticleStyles = getReticleStyles(combinedDeviation);
 	const arrowContainerStyles = getArrowContainerStyles(headingDeviation, pitchDeviation);
 	const arrowStyles = getReticleArrowStyles(combinedDeviation);
-
 	const targetPosition = getTargetIconPositioning(headingDeviation, pitchDeviation);
 	const targetDistancePosition = {top:targetPosition.top+30, left: targetPosition.left};
 
