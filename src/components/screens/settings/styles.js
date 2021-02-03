@@ -45,4 +45,10 @@ export default styles = {
 		iconSize: 20,
 		color: 'white',
 	},
+	broadcastImage: {
+		flex: 1,
+	    width: 300,
+	    resizeMode: 'contain',
+		borderWidth: 3
+	}
 };

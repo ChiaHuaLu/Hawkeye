@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, SafeAreaView, Vibration, TouchableOpacity } from 'react-native';
+import { View, SafeAreaView, Vibration, TouchableOpacity, Image } from 'react-native';
 import { Text, Button } from 'react-native-elements';
 import Clipboard from '@react-native-community/clipboard';
 import Communications from 'react-native-communications';
@@ -17,6 +17,7 @@ import strings from '../../../assets/strings/localizedStrings';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
 import { SettingsTabIcon } from '../../icons';
 import { ConfirmationBottomSheet } from '../../common/confirmationBottomSheet';
+import BroadcastingImages from '../../../assets/broadcast';
 import styles from './styles';
 
 class SettingsScreen extends Component {
@@ -27,7 +28,9 @@ class SettingsScreen extends Component {
 			broadcasting: false,
 			loading: false,
 			showModal: false,
-			copyButtonText: strings.copyButtonDefault
+			copyButtonText: strings.copyButtonDefault,
+			image: BroadcastingImages.disabled,
+			scheduledImageChanges: []
 		};
 	}
 
@@ -44,8 +47,26 @@ class SettingsScreen extends Component {
 		}, 2000);
 	}
 
+	scheduleBroadcastImageChanges() {
+		var scheduledImageChanges = [];
+		for (var index = 1; index <= 4; index++) {
+			const imageIndex = index;
+			scheduledImageChanges.push(
+				setTimeout(() => {
+					this.setState({
+						...this.state,
+						image: BroadcastingImages.active[imageIndex % 4]
+					})
+				}, index * 1000)
+			)
+		}
+		this.setState({...this.state, scheduledImageChanges});
+	}
+
 	startRecordingLocation() {
 		const uploadUpdatedLocation = ((location) => {
+			this.scheduleBroadcastImageChanges();
+
 			const { altitude, latitude, longitude, time } = location;
 			const { accessCode } = this.props.location;
 
@@ -56,12 +77,23 @@ class SettingsScreen extends Component {
 			Constants.locationUpdateIntervalSeconds,
 			Constants.locationUpdateIntervalSeconds,
 			this.props.navigation.isFocused);
-		this.setState({...this.state, interval: interval, broadcasting: true, loading: true});
+		this.setState({...this.state, interval: interval, broadcasting: true, loading: true, image: BroadcastingImages.active[0]});
 	}
 
 	stopRecordingLocation() {
 		clearInterval(this.state.interval);
-		this.setState({...this.state, interval: null, broadcasting: false, loading: false});
+		this.state.scheduledImageChanges.forEach((timeout) => {
+			clearTimeout(timeout);
+		});
+
+		this.setState({
+			...this.state,
+			interval: null,
+			broadcasting: false,
+			loading: false,
+			image: BroadcastingImages.disabled,
+			scheduledImageChanges: []
+		});
 	}
 
 	toggleLocationSwitch() {
@@ -119,10 +151,7 @@ class SettingsScreen extends Component {
 					</View>
 
 					<View style={styles.middleContainer}>
-						{ this.state.broadcasting
-							? <Text h1>Broadcasting...</Text>
-							: null
-						}
+						<Image source={this.state.image} style={styles.broadcastImage}/>
 					</View>
 
 					<View style={styles.locationButtonsContainer}>
