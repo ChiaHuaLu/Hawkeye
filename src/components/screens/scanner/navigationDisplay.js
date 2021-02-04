@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import { useSensorFusion, toDegrees } from 'react-native-sensor-fusion';
 import { Text } from 'react-native-elements';
 import { View } from 'react-native';
+import CompassHeading from 'react-native-compass-heading';
 
 import {
 	directDistance,
@@ -18,7 +19,18 @@ import styles from './styles';
 
 const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 
-	const [state, setState] = useState({width: 0, height: 0});
+	const [compassHeading, setCompassHeading] = useState(0);
+	  useEffect(() => {
+	    const degree_update_rate = 0.01;
+	    CompassHeading.start(degree_update_rate, degree => {
+	      setCompassHeading(degree);
+	    });
+	    return () => {
+	      CompassHeading.stop();
+	    };
+	  }, []);
+
+	const [dimensions, setDimensions] = useState({width: 0, height: 0});
 	const { activeTarget } = targets;
 	const myLocation = location.currentLocation;
 	const targetLocation = location.targetLocations[activeTarget];
@@ -28,8 +40,8 @@ const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 			cameraHeightAngle: cameraConfig.verticalAngleOfView,
 			cameraWidthAngle: cameraConfig.horizontalAngleOfView,
 		};
-		if (state.width !== 0 ) {
-			const screenDimensions = { screenWidth: state.width, screenHeight:  state.height};
+		if (dimensions.width !== 0 ) {
+			const screenDimensions = { screenWidth: dimensions.width, screenHeight:  dimensions.height};
 			const deviations = { headingDeviation, pitchDeviation };
 			const targetPosition = getTargetPosition(screenDimensions, cameraDimensions, deviations);
 			const positionStyle = {top: -targetPosition.y, left: targetPosition.x};
@@ -51,7 +63,7 @@ const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 
 	const distanceToTarget = directDistance(myLocation, targetLocation);
 	const { headingDeviation, pitchDeviation, combinedDeviation } =
-		getHeadingAndPitchDeviations(myLocation, targetLocation, useSensorFusion());
+		getHeadingAndPitchDeviations(myLocation, targetLocation, useSensorFusion(), compassHeading);
 
 	const reticleStyles = getReticleStyles(combinedDeviation);
 	const arrowContainerStyles = getArrowContainerStyles(headingDeviation, pitchDeviation);
@@ -76,7 +88,7 @@ const NaivgationDisplay = ({location, targets, cameraConfig}) => {
 				<View style={styles.reticleContainer}
 					onLayout={(event) => {
 						var {width, height} = event.nativeEvent.layout;
-						setState({width, height});
+						setDimensions({width, height});
 					}}>
 					<View style={[styles.targetIndicator, targetPosition]} />
 				</View>

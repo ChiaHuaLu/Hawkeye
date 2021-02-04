@@ -1,3 +1,5 @@
+import { Platform } from 'react-native';
+
 import {
 	bearingToTarget,
 	directDistance,
@@ -66,14 +68,24 @@ const getArrowSizeForDeviation = (combinedDeviation) => {
 	return maxArrowSize;
 }
 
-export const getHeadingAndPitchDeviations = (myLocation, targetLocation, {ahrs}) => {
+export const getHeadingAndPitchDeviations = (myLocation, targetLocation, {ahrs}, compassHeading) => {
+	const androidPitchCorrection = -90;
+	const iosPitchCorrection = 90;
+	const isAndroid = Platform.OS === 'android';
+
 	const distanceToTarget = directDistance(myLocation, targetLocation);
 	const headingToTarget = bearingToTarget(myLocation, targetLocation);
 	const pitchToTarget = elevationToTarget(myLocation, targetLocation);
 
 	const { heading, roll } = ahrs.getEulerAngles();
-	const currentHeading = ((360+270-radiansToDegrees(heading))%360).toFixed(2);
-	const currentPitch = ((radiansToDegrees(roll)-90)%360).toFixed(2); //front-back tilt (ios = android + 180)
+
+	// Compass Heading does not work accurately on Android, only on iOS.
+	// FusionHeading does not work on iOS, only on Android
+	const sensorFusionHeading = ((360+270-radiansToDegrees(heading))%360).toFixed(2);
+	const currentHeading = isAndroid ? sensorFusionHeading : compassHeading;
+
+	const platformPitchCorrection = isAndroid ? androidPitchCorrection : iosPitchCorrection;
+	const currentPitch = ((radiansToDegrees(roll)+platformPitchCorrection)%360).toFixed(2);
 
 	const headingDeviation = getHeadingDeviation(headingToTarget, currentHeading);
 	const pitchDeviation = getPitchDeviation(pitchToTarget, currentPitch);

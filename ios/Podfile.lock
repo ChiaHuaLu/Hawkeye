@@ -244,6 +244,8 @@ PODS:
     - React-Core
   - react-native-camera/RN (3.42.0):
     - React-Core
+  - react-native-compass-heading (1.0.2):
+    - React
   - react-native-geolocation (2.0.2):
     - React
   - react-native-geolocation-service (5.1.1):
@@ -374,6 +376,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - react-native-compass-heading (from `../node_modules/react-native-compass-heading`)
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-maps (from `../node_modules/react-native-maps`)
@@ -448,6 +451,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-compass-heading:
+    :path: "../node_modules/react-native-compass-heading"
   react-native-geolocation:
     :path: "../node_modules/@react-native-community/geolocation"
   react-native-geolocation-service:
@@ -527,6 +532,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
   react-native-camera: cf8a153d33138dcc457172fc3c33fdf4e5d288d2
+  react-native-compass-heading: 18742617bdb9e06ce104bd3b90f0dc700b791fd1
   react-native-geolocation: c956aeb136625c23e0dce0467664af2c437888c9
   react-native-geolocation-service: f33626f1ae12381ca2ae60f98b2f5edd676bf95a
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c

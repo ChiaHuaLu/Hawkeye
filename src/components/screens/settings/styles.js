@@ -47,8 +47,7 @@ export default styles = {
 	},
 	broadcastImage: {
 		flex: 1,
-	    width: 300,
+	    width: 250,
 	    resizeMode: 'contain',
-		borderWidth: 3
 	}
 };
