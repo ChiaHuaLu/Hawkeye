@@ -47,7 +47,7 @@ Next, select the target you want to search for.
 You can also deselect the active target, switch to a different target, or edit the target's name and access code by tapping or sliding on it from the List.
 
 ## Scan Screen
-Once you have selected n active target, you can head over to the scan screen, where you would be able to search for the target by scanning your environment.
+Once you have selected an active target, you can head over to the scan screen, where you would be able to search for the target by scanning your environment.
 
 An approximate direction of the target is represented by an orange ◇, with the distance shown below. A circle in the middle indicates where your phone is pointing, and an arrow points you toward the target. The circular reticle changes color from red to yellow to green as you get closer to the target.
 
