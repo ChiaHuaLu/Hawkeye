@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { useSensorFusion } from 'react-native-sensor-fusion';
 
 import {
 	bearingToTarget,
@@ -68,24 +69,13 @@ const getArrowSizeForDeviation = (combinedDeviation) => {
 	return maxArrowSize;
 }
 
-export const getHeadingAndPitchDeviations = (myLocation, targetLocation, {ahrs}, compassHeading) => {
-	const androidPitchCorrection = -90;
-	const iosPitchCorrection = 90;
-	const isAndroid = Platform.OS === 'android';
+export const getHeadingAndPitchDeviations = (myLocation, targetLocation, currentOrientation) => {
+
+	const { heading: currentHeading, pitch: currentPitch } = currentOrientation;
 
 	const distanceToTarget = directDistance(myLocation, targetLocation);
 	const headingToTarget = bearingToTarget(myLocation, targetLocation);
 	const pitchToTarget = elevationToTarget(myLocation, targetLocation);
-
-	const { heading, roll } = ahrs.getEulerAngles();
-
-	// Compass Heading does not work accurately on Android, only on iOS.
-	// FusionHeading does not work on iOS, only on Android
-	const sensorFusionHeading = ((360+270-radiansToDegrees(heading))%360).toFixed(2);
-	const currentHeading = isAndroid ? sensorFusionHeading : compassHeading;
-
-	const platformPitchCorrection = isAndroid ? androidPitchCorrection : iosPitchCorrection;
-	const currentPitch = ((radiansToDegrees(roll)+platformPitchCorrection)%360).toFixed(2);
 
 	const headingDeviation = getHeadingDeviation(headingToTarget, currentHeading);
 	const pitchDeviation = getPitchDeviation(pitchToTarget, currentPitch);

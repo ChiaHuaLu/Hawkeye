@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { SafeAreaView, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-redux';
 import SensorFusionProvider from 'react-native-sensor-fusion';
-import { RNCamera } from 'react-native-camera';
+import { connect } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Actions } from 'react-native-router-flux';
 
@@ -14,8 +14,9 @@ import Constants from '../../../constants/constants';
 import SharedStyles from '../../../constants/sharedStyles';
 import strings from '../../../assets/strings/localizedStrings';
 import { runIntervalIfConditionMet } from '../../../helpers/locationHelper';
-import NavigationDisplay from './navigationDisplay'
+import ScannerOverlays from './scannerOverlays'
 import { ScannerTabIcon } from '../../icons';
+import OrientationCamera from '../../common/orientationCamera';
 import styles from './styles';
 
 class ScannerScreen extends Component {
@@ -58,19 +59,11 @@ class ScannerScreen extends Component {
 	render() {
 		return (
 			<SafeAreaView style={styles.safeAreaView}>
-				<RNCamera
-					autoFocus
-					captureAudio={false}
-					style={styles.cameraView}
-					useNativeZoom={false}
-					type={RNCamera.Constants.Type.back}>
-						<SensorFusionProvider>
-							<NavigationDisplay
-							 	targets={this.props.targets}
-								location={this.props.location}
-								cameraConfig={this.props.configuration.camera} />
-						</SensorFusionProvider>
-				</RNCamera>
+				<SensorFusionProvider>
+					<OrientationCamera>
+						<ScannerOverlays />
+					</OrientationCamera>
+				</SensorFusionProvider>
 			</SafeAreaView>
 		);
 	}

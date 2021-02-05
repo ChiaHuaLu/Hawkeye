@@ -16,10 +16,6 @@ export default styles = {
 	indicator: {
 		alignItems: 'center',
 	},
-	cameraView: {
-		flex: 1,
-		height: 100,
-	},
 	safeAreaView: {
 		flex: 1,
 	},
